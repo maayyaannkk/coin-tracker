@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuItemMarket"
+        android:enabled="true"
+        android:icon="@drawable/ic_market"
+        android:title="@string/menu_item_market" />
+    <item
+        android:id="@+id/menuItemWatchlist"
+        android:enabled="true"
+        android:icon="@drawable/ic_watchlist"
+        android:title="@string/menu_item_watchlist" />
+    <item
+        android:id="@+id/menuItemSearch"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/menu_item_search" />
+    <item
+        android:id="@+id/menuItemNews"
+        android:enabled="true"
+        android:icon="@drawable/ic_news"
+        android:title="@string/menu_item_news" />
+    <item
+        android:id="@+id/menuItemSettings"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/menu_item_settings" />
+
+</menu>
