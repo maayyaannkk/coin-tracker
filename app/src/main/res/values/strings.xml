@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coin Tracker</string>
+    <string name="app_name">CoinTracker</string>
 
     <!-- Main Menu -->
     <string name="menu_item_market">Market</string>
