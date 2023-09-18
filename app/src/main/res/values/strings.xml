@@ -19,4 +19,17 @@
     <string name="hint_search_coin">Search for a coin…</string>
     <string name="label_trending">Trending</string>
     <string name="label_coins">Coins</string>
+
+    <!-- Search -->
+    <string name="label_settings_app">App Settings</string>
+    <string name="label_settings_others">Others</string>
+
+    <string name="label_setting_dark_mode">Dark Mode</string>
+    <string name="label_setting_currency">Currency</string>
+    <string name="label_setting_language">Language</string>
+    <string name="label_setting_start_screen">Default Start Screen</string>
+
+    <string name="label_setting_privacy_policy">Privacy Policy</string>
+    <string name="label_setting_terms">Terms &amp; Conditions</string>
+    <string name="label_setting_powered_by">Powered by: CoinGecko</string>
 </resources>
