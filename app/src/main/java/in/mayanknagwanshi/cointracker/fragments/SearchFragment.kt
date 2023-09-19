@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import `in`.mayanknagwanshi.cointracker.R
-import `in`.mayanknagwanshi.cointracker.adapter.MarketListAdapter
 import `in`.mayanknagwanshi.cointracker.adapter.SearchListAdapter
 import `in`.mayanknagwanshi.cointracker.adapter.TrendingListAdapter
-import `in`.mayanknagwanshi.cointracker.databinding.FragmentMarketBinding
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(R.layout.fragment_search) {

@@ -3,9 +3,22 @@ package `in`.mayanknagwanshi.cointracker.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
+import `in`.mayanknagwanshi.cointracker.R
+import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import java.text.DecimalFormat
 
-class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.PaymentHolder>() {
+class MarketListAdapter :
+    RecyclerView.Adapter<MarketListAdapter.PaymentHolder>() {
+
+    var marketDataList: List<MarketData> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHolder {
         val itemBinding =
             ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -13,20 +26,28 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.PaymentHolder>(
     }
 
     override fun onBindViewHolder(holder: PaymentHolder, position: Int) {
-        //val paymentBean: PaymentBean = paymentList[position]
-        holder.bind(position)
+        val marketData: MarketData = marketDataList[position]
+        holder.bind(marketData)
     }
 
-    override fun getItemCount(): Int = 25
+    override fun getItemCount(): Int = marketDataList.size
 
     class PaymentHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(position: Int) {
-            itemBinding.textViewRank.text = "${position*10}"
-            itemBinding.textViewCoin.text = "BTC"
-            itemBinding.textViewPrice.text = "$25,010"
-            itemBinding.textViewChange.text = "1.02%"
-            itemBinding.textViewMarketCap.text = "$225,010,123,112"
+        fun bind(marketData: MarketData) {
+            itemBinding.textViewRank.text = "${marketData.marketCapRank}"
+            itemBinding.textViewCoin.text = marketData.symbol.uppercase()
+            itemBinding.textViewPrice.text =
+                "$${DecimalFormat("#,###.000").format(marketData.currentPrice)}"
+            itemBinding.textViewChange.text =
+                "${DecimalFormat("##.00").format(marketData.priceChangePercentage24h)}%"
+            itemBinding.textViewMarketCap.text =
+                "$${DecimalFormat("#,###").format(marketData.marketCap)}"
+            itemBinding.imageViewCoin.load(marketData.image) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                transformations(CircleCropTransformation())
+            }
         }
     }
 }

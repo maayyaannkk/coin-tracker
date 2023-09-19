@@ -1,13 +1,10 @@
 package `in`.mayanknagwanshi.cointracker.activities
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.databinding.ActivityMainBinding
 import `in`.mayanknagwanshi.cointracker.fragments.MarketFragment
