@@ -2,19 +2,17 @@ package `in`.mayanknagwanshi.cointracker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import `in`.mayanknagwanshi.cointracker.R
+import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemSearchBinding
 
 class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>() {
-    var searchList: List<SearchData> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val itemBinding =
@@ -23,11 +21,11 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.SearchViewHolde
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        val searchData: SearchData = searchList[position]
+        val searchData: SearchData = differ.currentList[position]
         holder.bind(searchData)
     }
 
-    override fun getItemCount(): Int = searchList.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     class SearchViewHolder(private val itemBinding: ListItemSearchBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -42,4 +40,15 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.SearchViewHolde
             }
         }
     }
+
+    private val differCallback = object : DiffUtil.ItemCallback<SearchData>() {
+        override fun areItemsTheSame(oldItem: SearchData, newItem: SearchData): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: SearchData, newItem: SearchData): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallback)
 }

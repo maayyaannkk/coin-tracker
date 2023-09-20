@@ -47,7 +47,7 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
                 viewModel.marketData.collect { event ->
                     when (event) {
                         is NetworkResult.Error -> TODO()
-                        is NetworkResult.Success -> marketListAdapter.marketDataList = event.data
+                        is NetworkResult.Success -> marketListAdapter.differ.submitList(event.data)
                     }
                 }
             }

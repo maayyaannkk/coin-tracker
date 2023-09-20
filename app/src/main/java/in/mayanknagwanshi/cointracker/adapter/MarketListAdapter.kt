@@ -2,6 +2,8 @@ package `in`.mayanknagwanshi.cointracker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -12,12 +14,6 @@ import java.text.DecimalFormat
 
 class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
 
-    var marketDataList: List<MarketData> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
         val itemBinding =
             ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,11 +21,11 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
     }
 
     override fun onBindViewHolder(holder: MarketViewHolder, position: Int) {
-        val marketData: MarketData = marketDataList[position]
+        val marketData: MarketData = differ.currentList[position]
         holder.bind(marketData)
     }
 
-    override fun getItemCount(): Int = marketDataList.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     class MarketViewHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -49,4 +45,15 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
             }
         }
     }
+
+    private val differCallback = object : DiffUtil.ItemCallback<MarketData>() {
+        override fun areItemsTheSame(oldItem: MarketData, newItem: MarketData): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: MarketData, newItem: MarketData): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallback)
 }
