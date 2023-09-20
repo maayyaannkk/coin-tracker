@@ -3,30 +3,43 @@ package `in`.mayanknagwanshi.cointracker.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import coil.load
+import coil.transform.CircleCropTransformation
+import `in`.mayanknagwanshi.cointracker.R
+import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemSearchBinding
-import `in`.mayanknagwanshi.cointracker.databinding.ListItemTrendingBinding
 
-class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.PaymentHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHolder {
+class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>() {
+    var searchList: List<SearchData> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val itemBinding =
             ListItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PaymentHolder(itemBinding)
+        return SearchViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: PaymentHolder, position: Int) {
-        //val paymentBean: PaymentBean = paymentList[position]
-        holder.bind(position)
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        val searchData: SearchData = searchList[position]
+        holder.bind(searchData)
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = searchList.size
 
-    class PaymentHolder(private val itemBinding: ListItemSearchBinding) :
+    class SearchViewHolder(private val itemBinding: ListItemSearchBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(position: Int) {
-            itemBinding.textViewCoinRank.text = "#${position * 10}"
-            itemBinding.textViewCoin.text = "BTC"
-            itemBinding.textViewCoinName.text = "Bitcoin"
+        fun bind(searchData: SearchData) {
+            itemBinding.textViewCoinRank.text = "#${searchData.marketCapRank}"
+            itemBinding.textViewCoin.text = "${searchData.symbol}"
+            itemBinding.textViewCoinName.text = "${searchData.name}"
+            itemBinding.imageViewCoin.load(searchData.image) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                transformations(CircleCropTransformation())
+            }
         }
     }
 }

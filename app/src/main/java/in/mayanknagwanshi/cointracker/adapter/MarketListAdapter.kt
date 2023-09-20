@@ -10,8 +10,7 @@ import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
 import java.text.DecimalFormat
 
-class MarketListAdapter :
-    RecyclerView.Adapter<MarketListAdapter.PaymentHolder>() {
+class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
 
     var marketDataList: List<MarketData> = listOf()
         set(value) {
@@ -19,20 +18,20 @@ class MarketListAdapter :
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
         val itemBinding =
             ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PaymentHolder(itemBinding)
+        return MarketViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: PaymentHolder, position: Int) {
+    override fun onBindViewHolder(holder: MarketViewHolder, position: Int) {
         val marketData: MarketData = marketDataList[position]
         holder.bind(marketData)
     }
 
     override fun getItemCount(): Int = marketDataList.size
 
-    class PaymentHolder(private val itemBinding: ListItemMarketBinding) :
+    class MarketViewHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(marketData: MarketData) {
             itemBinding.textViewRank.text = "${marketData.marketCapRank}"

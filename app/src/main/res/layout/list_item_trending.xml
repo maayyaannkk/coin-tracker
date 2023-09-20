@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageViewCoin"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_margin="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"
@@ -31,8 +31,8 @@
         style="?attr/textAppearanceBodyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewCoin"
         app:layout_constraintStart_toStartOf="@id/textViewCoin"
-        app:layout_constraintTop_toBottomOf="@id/textViewCoin"
         tools:text="Bitcoin" />
 
     <TextView

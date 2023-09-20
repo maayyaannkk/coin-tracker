@@ -3,29 +3,43 @@ package `in`.mayanknagwanshi.cointracker.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import coil.load
+import coil.transform.CircleCropTransformation
+import `in`.mayanknagwanshi.cointracker.R
+import `in`.mayanknagwanshi.cointracker.data.TrendingData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemTrendingBinding
 
-class TrendingListAdapter : RecyclerView.Adapter<TrendingListAdapter.PaymentHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHolder {
+class TrendingListAdapter : RecyclerView.Adapter<TrendingListAdapter.TrendingViewHolder>() {
+    var trendingDataList: List<TrendingData> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder {
         val itemBinding =
             ListItemTrendingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PaymentHolder(itemBinding)
+        return TrendingViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: PaymentHolder, position: Int) {
-        //val paymentBean: PaymentBean = paymentList[position]
-        holder.bind(position)
+    override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
+        val trendingData: TrendingData = trendingDataList[position]
+        holder.bind(trendingData)
     }
 
-    override fun getItemCount(): Int = 1
+    override fun getItemCount(): Int = trendingDataList.size
 
-    class PaymentHolder(private val itemBinding: ListItemTrendingBinding) :
+    class TrendingViewHolder(private val itemBinding: ListItemTrendingBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(position: Int) {
-            itemBinding.textViewCoinRank.text = "${position * 10}"
-            itemBinding.textViewCoin.text = "BTC"
-            itemBinding.textViewCoinName.text = "Bitcoin"
+        fun bind(trendingData: TrendingData) {
+            itemBinding.textViewCoinRank.text = "#${trendingData.marketCapRank}"
+            itemBinding.textViewCoin.text = "${trendingData.symbol}"
+            itemBinding.textViewCoinName.text = "${trendingData.name}"
+            itemBinding.imageViewCoin.load(trendingData.image) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                transformations(CircleCropTransformation())
+            }
         }
     }
 }
