@@ -2,31 +2,57 @@ package `in`.mayanknagwanshi.cointracker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
+import `in`.mayanknagwanshi.cointracker.R
+import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import java.text.DecimalFormat
 
-class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.PaymentHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentHolder {
+class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchlistViewHolder {
         val itemBinding =
             ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PaymentHolder(itemBinding)
+        return WatchlistViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: PaymentHolder, position: Int) {
-        //val paymentBean: PaymentBean = paymentList[position]
-        holder.bind(position)
+    override fun onBindViewHolder(holder: WatchlistViewHolder, position: Int) {
+        holder.bind(differ.currentList[position])
     }
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = differ.currentList.size
 
-    class PaymentHolder(private val itemBinding: ListItemMarketBinding) :
+    class WatchlistViewHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(position: Int) {
-            itemBinding.textViewRank.text = "$position"
-            itemBinding.textViewCoin.text = "BTCBD"
-            itemBinding.textViewPrice.text = "$25,010"
-            itemBinding.textViewChange.text = "1.02%"
-            itemBinding.textViewMarketCap.text = "$225,010,123,112"
+
+        fun bind(watchlistData: WatchlistData) {
+            itemBinding.textViewRank.text = "${watchlistData.marketCapRank}"
+            itemBinding.textViewCoin.text = watchlistData.symbol.uppercase()
+            itemBinding.textViewPrice.text =
+                "$${DecimalFormat("#,###.000").format(watchlistData.currentPrice)}"
+            itemBinding.textViewChange.text =
+                "${DecimalFormat("##.00").format(watchlistData.priceChangePercentage24h)}%"
+            itemBinding.textViewMarketCap.text =
+                "$${DecimalFormat("#,###").format(watchlistData.marketCap)}"
+            itemBinding.imageViewCoin.load(watchlistData.image) {
+                crossfade(true)
+                placeholder(R.drawable.logo)
+                transformations(CircleCropTransformation())
+            }
         }
     }
+
+    private val differCallback = object : DiffUtil.ItemCallback<WatchlistData>() {
+        override fun areItemsTheSame(oldItem: WatchlistData, newItem: WatchlistData): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: WatchlistData, newItem: WatchlistData): Boolean {
+            return oldItem == newItem
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallback)
 }

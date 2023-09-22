@@ -5,16 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.mayanknagwanshi.cointracker.R
-import `in`.mayanknagwanshi.cointracker.adapter.MarketListAdapter
 import `in`.mayanknagwanshi.cointracker.adapter.WatchListAdapter
-import `in`.mayanknagwanshi.cointracker.databinding.FragmentMarketBinding
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentWatchlistBinding
+import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
     private lateinit var binding: FragmentWatchlistBinding
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,11 +33,20 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         binding.recyclerView.addItemDecoration(divider)
 
-        binding.recyclerView.adapter = WatchListAdapter()
+        val watchListAdapter = WatchListAdapter()
+        binding.recyclerView.adapter = watchListAdapter
 
-        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.watchlistData.collect { event ->
+                    watchListAdapter.differ.submitList(event)
+                }
+            }
+        }
     }
 }

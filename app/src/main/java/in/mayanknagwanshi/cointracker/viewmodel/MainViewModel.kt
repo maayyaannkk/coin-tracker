@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.data.TrendingData
+import `in`.mayanknagwanshi.cointracker.database.table.WatchlistDao
 import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val coinGeckoApi: CoinGeckoApi,
+    private val watchlistDao: WatchlistDao,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -34,6 +36,8 @@ class MainViewModel @Inject constructor(
     private val _searchData =
         MutableStateFlow<NetworkResult<List<SearchData>>>(NetworkResult.Success(listOf()))
     val searchData: StateFlow<NetworkResult<List<SearchData>>> = _searchData
+
+    val watchlistData = watchlistDao.getAll()
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
