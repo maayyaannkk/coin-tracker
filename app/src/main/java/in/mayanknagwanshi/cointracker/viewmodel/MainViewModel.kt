@@ -4,18 +4,24 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.data.TrendingData
+import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
-import `in`.mayanknagwanshi.cointracker.network.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val coinGeckoApi: CoinGeckoApi,
+    application: Application
+) : AndroidViewModel(application) {
 
     private val _marketData =
         MutableStateFlow<NetworkResult<List<MarketData>>>(NetworkResult.Success(listOf()))
@@ -31,7 +37,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitInstance.api.getMarket()
+            val response = coinGeckoApi.getMarket()
             val result = response.body()
             if (response.isSuccessful && !result.isNullOrEmpty()) {
                 _marketData.value = NetworkResult.Success(result)
@@ -44,7 +50,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun requestTrending() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitInstance.api.getTrending()
+            val response = coinGeckoApi.getTrending()
             val result = response.body()?.string()
             if (response.isSuccessful && result != null) {
                 val coinsArray = JSONObject(result).getJSONArray("coins")
@@ -68,7 +74,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun searchCoins(searchString: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitInstance.api.search(searchString)
+            val response = coinGeckoApi.search(searchString)
             val result = response.body()
             if (response.isSuccessful && result != null) {
                 val coinsArray = JSONObject(result.string()).getJSONArray("coins")

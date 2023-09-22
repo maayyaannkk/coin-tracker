@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.databinding.ActivityMainBinding
 import `in`.mayanknagwanshi.cointracker.fragments.MarketFragment
@@ -13,7 +14,7 @@ import `in`.mayanknagwanshi.cointracker.fragments.SearchFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SettingsFragment
 import `in`.mayanknagwanshi.cointracker.fragments.WatchlistFragment
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

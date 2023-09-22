@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.adapter.MarketListAdapter
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentMarketBinding
@@ -18,6 +19,7 @@ import `in`.mayanknagwanshi.cointracker.network.NetworkResult
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MarketFragment : Fragment(R.layout.fragment_market) {
     private lateinit var binding: FragmentMarketBinding
     private val viewModel: MainViewModel by activityViewModels()

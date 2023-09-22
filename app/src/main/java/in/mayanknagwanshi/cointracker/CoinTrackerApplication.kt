@@ -2,8 +2,10 @@ package `in`.mayanknagwanshi.cointracker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.HiltAndroidApp
 import `in`.mayanknagwanshi.cointracker.util.SharedPrefUtil
 
+@HiltAndroidApp
 class CoinTrackerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
