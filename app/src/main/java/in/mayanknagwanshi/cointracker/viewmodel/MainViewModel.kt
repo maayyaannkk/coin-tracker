@@ -9,6 +9,7 @@ import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.data.TrendingData
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistDao
+import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,6 +100,38 @@ class MainViewModel @Inject constructor(
                 _searchData.value =
                     NetworkResult.Error(response.code(), response.errorBody().toString())
             }
+        }
+    }
+
+    private fun addToWatchlist(marketData: MarketData) {
+        val watchlistData = WatchlistData(
+            id = marketData.id,
+            symbol = marketData.symbol,
+            name = marketData.name,
+            image = marketData.image,
+            currentPrice = marketData.currentPrice,
+            marketCap = marketData.marketCap,
+            marketCapRank = marketData.marketCapRank,
+            priceChange24h = marketData.priceChange24h,
+            priceChangePercentage24h = marketData.priceChangePercentage24h,
+            lastUpdated = marketData.lastUpdated,
+            lastSynced = Date()
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            watchlistDao.insert(watchlistData)
+        }
+    }
+
+    fun toggleWatchlist(marketData: MarketData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (watchlistDao.delete(marketData.id) == 0)
+                addToWatchlist(marketData)
+        }
+    }
+
+    fun toggleWatchlist(watchlistData: WatchlistData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            watchlistDao.delete(watchlistData.id)
         }
     }
 }

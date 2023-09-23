@@ -9,13 +9,15 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
-import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import `in`.mayanknagwanshi.cointracker.databinding.ListItemWatchlistBinding
 import java.text.DecimalFormat
 
 class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHolder>() {
+    var onFavoriteClick: ((WatchlistData) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchlistViewHolder {
         val itemBinding =
-            ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListItemWatchlistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WatchlistViewHolder(itemBinding)
     }
 
@@ -25,7 +27,7 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    class WatchlistViewHolder(private val itemBinding: ListItemMarketBinding) :
+    inner class WatchlistViewHolder(private val itemBinding: ListItemWatchlistBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(watchlistData: WatchlistData) {
@@ -41,6 +43,9 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
                 crossfade(true)
                 placeholder(R.drawable.logo)
                 transformations(CircleCropTransformation())
+            }
+            itemBinding.imageViewFavorite.setOnClickListener {
+                if (onFavoriteClick != null) onFavoriteClick?.invoke(watchlistData)
             }
         }
     }

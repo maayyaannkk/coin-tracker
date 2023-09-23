@@ -42,6 +42,9 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
         binding.recyclerView.addItemDecoration(divider)
 
         val marketListAdapter = MarketListAdapter()
+        marketListAdapter.onFavoriteClick = { marketData ->
+            viewModel.toggleWatchlist(marketData)
+        }
         binding.recyclerView.adapter = marketListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {

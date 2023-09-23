@@ -13,8 +13,11 @@ interface WatchlistDao {
     fun getAll(): Flow<List<WatchlistData>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(watchlistData: WatchlistData)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(watchlistData: List<WatchlistData>)
 
-    @Delete
-    fun delete(watchlistData: WatchlistData)
+    @Query("Delete from watchlist where id=:id")
+    fun delete(id: String): Int
 }

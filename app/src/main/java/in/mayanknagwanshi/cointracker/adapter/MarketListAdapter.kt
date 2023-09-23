@@ -14,6 +14,8 @@ import java.text.DecimalFormat
 
 class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
 
+    var onFavoriteClick: ((MarketData) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
         val itemBinding =
             ListItemMarketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,7 +29,7 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    class MarketViewHolder(private val itemBinding: ListItemMarketBinding) :
+    inner class MarketViewHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(marketData: MarketData) {
             itemBinding.textViewRank.text = "${marketData.marketCapRank}"
@@ -42,6 +44,9 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
                 crossfade(true)
                 placeholder(R.drawable.logo)
                 transformations(CircleCropTransformation())
+            }
+            itemBinding.imageViewFavorite.setOnClickListener {
+                if (onFavoriteClick != null) onFavoriteClick?.invoke(marketData)
             }
         }
     }

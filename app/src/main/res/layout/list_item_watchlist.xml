@@ -87,6 +87,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/textViewChange"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.35"
-        tools:text="$251,220,020,102" />
+        app:layout_constraintWidth_percent="0.25"
+        tools:text="$251.22B" />
+
+    <ImageView
+        android:id="@+id/imageViewFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_favorite_selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewMarketCap"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

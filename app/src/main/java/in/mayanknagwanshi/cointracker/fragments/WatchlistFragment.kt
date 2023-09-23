@@ -39,6 +39,9 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
         binding.recyclerView.addItemDecoration(divider)
 
         val watchListAdapter = WatchListAdapter()
+        watchListAdapter.onFavoriteClick = { watchlistData ->
+            viewModel.toggleWatchlist(watchlistData)
+        }
         binding.recyclerView.adapter = watchListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
