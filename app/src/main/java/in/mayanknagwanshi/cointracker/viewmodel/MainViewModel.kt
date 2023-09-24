@@ -40,6 +40,7 @@ class MainViewModel @Inject constructor(
     val searchData: StateFlow<NetworkResult<List<SearchData>>> = _searchData
 
     val watchlistData = watchlistDao.getAll()
+    val favoriteList = watchlistDao.getAllIds()
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {

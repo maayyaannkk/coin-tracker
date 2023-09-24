@@ -52,11 +52,17 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
                 viewModel.marketData.collect { event ->
                     when (event) {
                         is NetworkResult.Error -> TODO()
-                        is NetworkResult.Success -> marketListAdapter.differ.submitList(event.data)
+                        is NetworkResult.Success -> marketListAdapter.formatAndNotify(event.data)
                     }
                 }
             }
         }
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favoriteList.collect { event ->
+                    marketListAdapter.selectedList = event.toMutableList()
+                }
+            }
+        }
     }
 }

@@ -90,13 +90,12 @@
         app:layout_constraintWidth_percent="0.25"
         tools:text="$251.22B" />
 
-    <ImageView
-        android:id="@+id/imageViewFavorite"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonFavorite"
+        style="?attr/materialIconButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_favorite_selected"
+        app:icon="@drawable/ic_favorite_selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textViewMarketCap"

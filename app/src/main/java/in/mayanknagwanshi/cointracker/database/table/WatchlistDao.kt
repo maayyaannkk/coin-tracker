@@ -12,6 +12,9 @@ interface WatchlistDao {
     @Query("SELECT * FROM watchlist")
     fun getAll(): Flow<List<WatchlistData>>
 
+    @Query("SELECT id FROM watchlist")
+    fun getAllIds(): Flow<List<String>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(watchlistData: WatchlistData)
 

@@ -2,6 +2,7 @@ package `in`.mayanknagwanshi.cointracker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,11 @@ import java.text.DecimalFormat
 class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
 
     var onFavoriteClick: ((MarketData) -> Unit)? = null
+    var selectedList = mutableListOf<String>()
+        set(value) {
+            field = value
+            formatAndNotify()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
         val itemBinding =
@@ -45,10 +51,26 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
                 placeholder(R.drawable.logo)
                 transformations(CircleCropTransformation())
             }
-            itemBinding.imageViewFavorite.setOnClickListener {
+            itemBinding.buttonFavorite.setOnClickListener {
                 if (onFavoriteClick != null) onFavoriteClick?.invoke(marketData)
             }
+            itemBinding.buttonFavorite.icon =
+                if (marketData.isFavorite) ContextCompat.getDrawable(
+                    itemBinding.buttonFavorite.context,
+                    R.drawable.ic_favorite_selected
+                )
+                else ContextCompat.getDrawable(
+                    itemBinding.buttonFavorite.context,
+                    R.drawable.ic_favorite
+                )
         }
+    }
+
+    fun formatAndNotify(marketListRaw: List<MarketData> = emptyList()) {
+        val marketList = marketListRaw.ifEmpty { differ.currentList.map { it.copy() } }
+        for (marketData in marketList)
+            marketData.isFavorite = selectedList.contains(marketData.id)
+        differ.submitList(marketList)
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<MarketData>() {
@@ -60,5 +82,5 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
             return oldItem == newItem
         }
     }
-    val differ = AsyncListDiffer(this, differCallback)
+    private val differ = AsyncListDiffer(this, differCallback)
 }

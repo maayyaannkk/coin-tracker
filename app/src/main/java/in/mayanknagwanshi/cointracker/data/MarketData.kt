@@ -7,7 +7,7 @@ data class MarketData(
     @SerializedName("id")
     val id: String,
     @SerializedName("symbol")
-    val symbol: String,
+    var symbol: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("image")
@@ -41,5 +41,6 @@ data class MarketData(
     @SerializedName("max_supply")
     val maxSupply: Double,
     @SerializedName("last_updated")
-    val lastUpdated: String
+    val lastUpdated: String,
+    var isFavorite: Boolean = false
 )

@@ -44,7 +44,7 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
                 placeholder(R.drawable.logo)
                 transformations(CircleCropTransformation())
             }
-            itemBinding.imageViewFavorite.setOnClickListener {
+            itemBinding.buttonFavorite.setOnClickListener {
                 if (onFavoriteClick != null) onFavoriteClick?.invoke(watchlistData)
             }
         }
