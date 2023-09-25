@@ -1,5 +1,6 @@
 package `in`.mayanknagwanshi.cointracker.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -10,6 +11,8 @@ import coil.transform.CircleCropTransformation
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemWatchlistBinding
+import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
+import `in`.mayanknagwanshi.cointracker.util.formatPercentage
 import java.text.DecimalFormat
 
 class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHolder>() {
@@ -33,12 +36,10 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
         fun bind(watchlistData: WatchlistData) {
             itemBinding.textViewRank.text = "${watchlistData.marketCapRank}"
             itemBinding.textViewCoin.text = watchlistData.symbol.uppercase()
-            itemBinding.textViewPrice.text =
-                "$${DecimalFormat("#,###.000").format(watchlistData.currentPrice)}"
-            itemBinding.textViewChange.text =
-                "${DecimalFormat("##.00").format(watchlistData.priceChangePercentage24h)}%"
-            itemBinding.textViewMarketCap.text =
-                "$${DecimalFormat("#,###").format(watchlistData.marketCap)}"
+            itemBinding.textViewPrice.text = watchlistData.currentPrice.formatLargeAmount()
+            itemBinding.textViewChange.text = watchlistData.priceChangePercentage24h.formatPercentage()
+            itemBinding.textViewChange.setTextColor(if (watchlistData.priceChangePercentage24h > 0) Color.GREEN else Color.RED)
+            itemBinding.textViewMarketCap.text = watchlistData.marketCap.formatLargeAmount()
             itemBinding.imageViewCoin.load(watchlistData.image) {
                 crossfade(true)
                 placeholder(R.drawable.logo)

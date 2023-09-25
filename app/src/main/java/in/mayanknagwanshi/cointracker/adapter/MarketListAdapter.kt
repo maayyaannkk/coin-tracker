@@ -1,5 +1,6 @@
 package `in`.mayanknagwanshi.cointracker.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -11,6 +12,8 @@ import coil.transform.CircleCropTransformation
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
+import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
+import `in`.mayanknagwanshi.cointracker.util.formatPercentage
 import java.text.DecimalFormat
 
 class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
@@ -40,12 +43,10 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
         fun bind(marketData: MarketData) {
             itemBinding.textViewRank.text = "${marketData.marketCapRank}"
             itemBinding.textViewCoin.text = marketData.symbol.uppercase()
-            itemBinding.textViewPrice.text =
-                "$${DecimalFormat("#,###.000").format(marketData.currentPrice)}"
-            itemBinding.textViewChange.text =
-                "${DecimalFormat("##.00").format(marketData.priceChangePercentage24h)}%"
-            itemBinding.textViewMarketCap.text =
-                "$${DecimalFormat("#,###").format(marketData.marketCap)}"
+            itemBinding.textViewPrice.text = marketData.currentPrice.formatLargeAmount()
+            itemBinding.textViewChange.text = marketData.priceChangePercentage24h.formatPercentage()
+            itemBinding.textViewChange.setTextColor(if (marketData.priceChangePercentage24h > 0) Color.GREEN else Color.RED)
+            itemBinding.textViewMarketCap.text = marketData.marketCap.formatLargeAmount()
             itemBinding.imageViewCoin.load(marketData.image) {
                 crossfade(true)
                 placeholder(R.drawable.logo)
