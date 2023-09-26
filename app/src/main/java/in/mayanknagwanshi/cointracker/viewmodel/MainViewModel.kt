@@ -115,7 +115,9 @@ class MainViewModel @Inject constructor(
                             )
                         )
                     }
-                    _searchData.value = NetworkResult.Success(searchDataList)
+                    _searchData.value =
+                        if (searchDataList.isEmpty()) NetworkResult.Error(0, "No results")
+                        else NetworkResult.Success(searchDataList)
                 } else {
                     _searchData.value =
                         NetworkResult.Error(response.code(), response.errorBody().toString())

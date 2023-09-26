@@ -43,6 +43,12 @@
                 android:visibility="gone"
                 app:constraint_referenced_ids="textViewCoins,cardViewCoins" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupTrending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="textViewTrending,cardViewTrending" />
+
             <TextView
                 android:id="@+id/textViewCoins"
                 style="?attr/textAppearanceLabelLarge"
@@ -56,15 +62,17 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewCoins"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewCoins">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewCoins"
+                <in.mayanknagwanshi.cointracker.custom.ProgressRecyclerView
+                    android:id="@+id/progressRecyclerViewCoins"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="match_parent"
+                    app:error_image="@drawable/logo"
+                    app:error_text="@string/error_generic_empty"
                     tools:itemCount="5"
                     tools:listitem="@layout/list_item_search" />
             </com.google.android.material.card.MaterialCardView>
@@ -77,22 +85,21 @@
                 android:layout_margin="5dp"
                 android:text="@string/label_trending"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardViewCoins" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewTrending"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewTrending"
                 app:layout_constraintVertical_bias="0">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTrending"
+                <in.mayanknagwanshi.cointracker.custom.ProgressRecyclerView
+                    android:id="@+id/progressRecyclerViewTrending"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="match_parent"
                     tools:itemCount="5"
                     tools:listitem="@layout/list_item_trending" />
             </com.google.android.material.card.MaterialCardView>
