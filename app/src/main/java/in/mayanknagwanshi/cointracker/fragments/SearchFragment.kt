@@ -62,6 +62,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     when (event) {
                         is NetworkResult.Error -> TODO()
                         is NetworkResult.Success -> trendingListAdapter.differ.submitList(event.data)
+                        is NetworkResult.Loading -> TODO()
                     }
                 }
             }
@@ -89,9 +90,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 viewModel.searchData.collect { event ->
                     when (event) {
                         is NetworkResult.Error -> TODO()
+
                         is NetworkResult.Success -> {
                             searchListAdapter.differ.submitList(event.data)
                         }
+
+                        is NetworkResult.Loading -> TODO()
                     }
                 }
             }

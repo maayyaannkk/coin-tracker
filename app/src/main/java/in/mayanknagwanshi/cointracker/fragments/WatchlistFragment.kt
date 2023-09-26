@@ -36,18 +36,20 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
         super.onViewCreated(view, savedInstanceState)
 
         val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
-        binding.recyclerView.addItemDecoration(divider)
+        binding.progressRecyclerView.recyclerView.addItemDecoration(divider)
 
         val watchListAdapter = WatchListAdapter()
         watchListAdapter.onFavoriteClick = { watchlistData ->
             viewModel.toggleWatchlist(watchlistData)
         }
-        binding.recyclerView.adapter = watchListAdapter
+        binding.progressRecyclerView.recyclerView.adapter = watchListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.watchlistData.collect { event ->
                     watchListAdapter.differ.submitList(event)
+                    if (event.isEmpty()) binding.progressRecyclerView.showError()
+                    else binding.progressRecyclerView.showRecyclerView()
                 }
             }
         }

@@ -123,11 +123,12 @@
             app:layout_constraintWidth_percent="0.1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <in.mayanknagwanshi.cointracker.custom.ProgressRecyclerView
+        android:id="@+id/progressRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:error_image="@drawable/ic_error"
+        app:error_text="@string/error_internet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutTitle"
         tools:itemCount="25"

@@ -32,4 +32,6 @@
     <string name="label_setting_privacy_policy">Privacy Policy</string>
     <string name="label_setting_terms">Terms &amp; Conditions</string>
     <string name="label_setting_powered_by">Powered by: CoinGecko</string>
+    <string name="error_internet">Network not available</string>
+    <string name="error_watchlist_empty">Nothing to watch</string>
 </resources>

@@ -44,7 +44,9 @@ class MainViewModel @Inject constructor(
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
+            _marketData.value = NetworkResult.Loading(true)
             val response = coinGeckoApi.getMarket()
+            _marketData.value = NetworkResult.Loading(false)
             val result = response.body()
             if (response.isSuccessful && !result.isNullOrEmpty()) {
                 _marketData.value = NetworkResult.Success(result)

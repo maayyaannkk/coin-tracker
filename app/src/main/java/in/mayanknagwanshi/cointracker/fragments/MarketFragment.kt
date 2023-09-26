@@ -39,20 +39,31 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
         viewModel.requestMarket()
 
         val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
-        binding.recyclerView.addItemDecoration(divider)
+        binding.progressRecyclerView.recyclerView.addItemDecoration(divider)
 
         val marketListAdapter = MarketListAdapter()
         marketListAdapter.onFavoriteClick = { marketData ->
             viewModel.toggleWatchlist(marketData)
         }
-        binding.recyclerView.adapter = marketListAdapter
+        binding.progressRecyclerView.recyclerView.adapter = marketListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.marketData.collect { event ->
                     when (event) {
-                        is NetworkResult.Error -> TODO()
-                        is NetworkResult.Success -> marketListAdapter.formatAndNotify(event.data)
+                        is NetworkResult.Error -> {
+                            binding.progressRecyclerView.showError()
+                        }
+
+                        is NetworkResult.Success -> {
+                            binding.progressRecyclerView.showRecyclerView()
+                            marketListAdapter.formatAndNotify(event.data)
+                        }
+
+                        is NetworkResult.Loading -> {
+                            if (event.isLoading) binding.progressRecyclerView.showProgress()
+                            else binding.progressRecyclerView.hideProgress()
+                        }
                     }
                 }
             }
