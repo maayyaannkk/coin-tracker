@@ -66,11 +66,11 @@
             app:layout_constraintWidth_percent="0.075" />
 
         <TextView
-            android:id="@+id/linearLayoutCoin"
+            android:id="@+id/textViewCoin"
             style="?attr/textAppearanceTitleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="center"
             android:text="@string/label_coin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/textViewRank"
@@ -85,7 +85,7 @@
             android:gravity="end"
             android:text="@string/label_price"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/linearLayoutCoin"
+            app:layout_constraintStart_toEndOf="@id/textViewCoin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.2" />
 

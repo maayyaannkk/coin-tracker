@@ -1,5 +1,6 @@
 package `in`.mayanknagwanshi.cointracker.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,10 +53,12 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
                 viewModel.marketData.collect { event ->
                     when (event) {
                         is NetworkResult.Error -> {
+                            binding.linearLayoutTitle.visibility = View.GONE
                             binding.progressRecyclerView.showError()
                         }
 
                         is NetworkResult.Success -> {
+                            binding.linearLayoutTitle.visibility = View.VISIBLE
                             binding.progressRecyclerView.showRecyclerView()
                             marketListAdapter.formatAndNotify(event.data)
                         }

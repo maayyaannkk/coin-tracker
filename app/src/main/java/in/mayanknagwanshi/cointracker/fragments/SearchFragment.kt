@@ -60,9 +60,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.trendingData.collect { event ->
                     when (event) {
-                        is NetworkResult.Error -> TODO()
+                        is NetworkResult.Error -> {
+                            //TODO()
+                        }
+
                         is NetworkResult.Success -> trendingListAdapter.differ.submitList(event.data)
-                        is NetworkResult.Loading -> TODO()
+                        is NetworkResult.Loading -> {
+                            //TODO()
+                        }
                     }
                 }
             }
@@ -89,13 +94,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchData.collect { event ->
                     when (event) {
-                        is NetworkResult.Error -> TODO()
+                        is NetworkResult.Error -> {
+                            //TODO()
+                        }
 
                         is NetworkResult.Success -> {
                             searchListAdapter.differ.submitList(event.data)
                         }
 
-                        is NetworkResult.Loading -> TODO()
+                        is NetworkResult.Loading -> {
+                            //TODO()
+                        }
                     }
                 }
             }

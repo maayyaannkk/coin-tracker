@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okio.IOException
 import org.json.JSONObject
 import java.util.Date
 import javax.inject.Inject
@@ -45,63 +46,83 @@ class MainViewModel @Inject constructor(
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
             _marketData.value = NetworkResult.Loading(true)
-            val response = coinGeckoApi.getMarket()
-            _marketData.value = NetworkResult.Loading(false)
-            val result = response.body()
-            if (response.isSuccessful && !result.isNullOrEmpty()) {
-                _marketData.value = NetworkResult.Success(result)
-            } else {
-                _marketData.value =
-                    NetworkResult.Error(response.code(), response.errorBody().toString())
+            try {
+                val response = coinGeckoApi.getMarket()
+                _marketData.value = NetworkResult.Loading(false)
+                val result = response.body()
+                if (response.isSuccessful && !result.isNullOrEmpty()) {
+                    _marketData.value = NetworkResult.Success(result)
+                } else {
+                    _marketData.value =
+                        NetworkResult.Error(response.code(), response.errorBody().toString())
+                }
+            } catch (e: IOException) {
+                _marketData.value = NetworkResult.Loading(false)
+                _marketData.value = NetworkResult.Error(0, e.message)
             }
+
         }
     }
 
     fun requestTrending() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = coinGeckoApi.getTrending()
-            val result = response.body()?.string()
-            if (response.isSuccessful && result != null) {
-                val coinsArray = JSONObject(result).getJSONArray("coins")
-                val trendingDataList = mutableListOf<TrendingData>()
-                for (i in 0..<coinsArray.length()) {
-                    val coinObject = coinsArray.getJSONObject(i).getJSONObject("item")
-                    trendingDataList.add(
-                        Gson().fromJson(
-                            coinObject.toString(),
-                            TrendingData::class.java
+            _trendingData.value = NetworkResult.Loading(true)
+            try {
+                val response = coinGeckoApi.getTrending()
+                _trendingData.value = NetworkResult.Loading(false)
+                val result = response.body()?.string()
+                if (response.isSuccessful && result != null) {
+                    val coinsArray = JSONObject(result).getJSONArray("coins")
+                    val trendingDataList = mutableListOf<TrendingData>()
+                    for (i in 0..<coinsArray.length()) {
+                        val coinObject = coinsArray.getJSONObject(i).getJSONObject("item")
+                        trendingDataList.add(
+                            Gson().fromJson(
+                                coinObject.toString(),
+                                TrendingData::class.java
+                            )
                         )
-                    )
+                    }
+                    _trendingData.value = NetworkResult.Success(trendingDataList)
+                } else {
+                    _trendingData.value =
+                        NetworkResult.Error(response.code(), response.errorBody().toString())
                 }
-                _trendingData.value = NetworkResult.Success(trendingDataList)
-            } else {
-                _trendingData.value =
-                    NetworkResult.Error(response.code(), response.errorBody().toString())
+            } catch (e: IOException) {
+                _trendingData.value = NetworkResult.Loading(false)
+                _trendingData.value = NetworkResult.Error(0, e.message)
             }
         }
     }
 
     fun searchCoins(searchString: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = coinGeckoApi.search(searchString)
-            val result = response.body()
-            if (response.isSuccessful && result != null) {
-                val coinsArray = JSONObject(result.string()).getJSONArray("coins")
-                val searchDataList = mutableListOf<SearchData>()
+            _searchData.value = NetworkResult.Loading(true)
+            try {
+                val response = coinGeckoApi.search(searchString)
+                _searchData.value = NetworkResult.Loading(false)
+                val result = response.body()
+                if (response.isSuccessful && result != null) {
+                    val coinsArray = JSONObject(result.string()).getJSONArray("coins")
+                    val searchDataList = mutableListOf<SearchData>()
 
-                for (i in 0..<if (coinsArray.length() <= 10) coinsArray.length() else 10) {
-                    val coinObject = coinsArray.getJSONObject(i)
-                    searchDataList.add(
-                        Gson().fromJson(
-                            coinObject.toString(),
-                            SearchData::class.java
+                    for (i in 0..<if (coinsArray.length() <= 10) coinsArray.length() else 10) {
+                        val coinObject = coinsArray.getJSONObject(i)
+                        searchDataList.add(
+                            Gson().fromJson(
+                                coinObject.toString(),
+                                SearchData::class.java
+                            )
                         )
-                    )
+                    }
+                    _searchData.value = NetworkResult.Success(searchDataList)
+                } else {
+                    _searchData.value =
+                        NetworkResult.Error(response.code(), response.errorBody().toString())
                 }
-                _searchData.value = NetworkResult.Success(searchDataList)
-            } else {
-                _searchData.value =
-                    NetworkResult.Error(response.code(), response.errorBody().toString())
+            } catch (e: IOException) {
+                _searchData.value = NetworkResult.Loading(false)
+                _searchData.value = NetworkResult.Error(0, e.message)
             }
         }
     }

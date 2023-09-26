@@ -19,12 +19,12 @@
 
     <TextView
         android:id="@+id/textViewError"
+        style="?attr/textAppearanceLabelLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.3"
         android:gravity="center"
         android:text="@string/error_internet"
-        android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

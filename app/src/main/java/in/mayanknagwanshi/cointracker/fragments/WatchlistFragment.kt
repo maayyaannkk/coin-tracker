@@ -48,8 +48,13 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.watchlistData.collect { event ->
                     watchListAdapter.differ.submitList(event)
-                    if (event.isEmpty()) binding.progressRecyclerView.showError()
-                    else binding.progressRecyclerView.showRecyclerView()
+                    if (event.isEmpty()) {
+                        binding.progressRecyclerView.showError()
+                        binding.linearLayoutTitle.visibility = View.GONE
+                    } else {
+                        binding.linearLayoutTitle.visibility = View.VISIBLE
+                        binding.progressRecyclerView.showRecyclerView()
+                    }
                 }
             }
         }
