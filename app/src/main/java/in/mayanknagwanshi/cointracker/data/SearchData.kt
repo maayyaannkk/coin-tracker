@@ -13,5 +13,6 @@ data class SearchData(
     @SerializedName("market_cap_rank")
     val marketCapRank: Int,
     @SerializedName("large")
-    val image: String
+    val image: String,
+    var isFavorite: Boolean = false
 )

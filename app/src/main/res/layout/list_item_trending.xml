@@ -35,14 +35,22 @@
         app:layout_constraintStart_toStartOf="@id/textViewCoin"
         tools:text="Bitcoin" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonFavorite"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewCoinRank"
         style="?attr/textAppearanceLabelSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewCoin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="#243" />
 </androidx.constraintlayout.widget.ConstraintLayout>

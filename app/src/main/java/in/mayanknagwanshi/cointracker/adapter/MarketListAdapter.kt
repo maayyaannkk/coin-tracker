@@ -14,6 +14,7 @@ import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemMarketBinding
 import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
 import `in`.mayanknagwanshi.cointracker.util.formatPercentage
+import `in`.mayanknagwanshi.cointracker.util.formatShortForm
 import java.text.DecimalFormat
 
 class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolder>() {
@@ -41,7 +42,7 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
     inner class MarketViewHolder(private val itemBinding: ListItemMarketBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(marketData: MarketData) {
-            itemBinding.textViewRank.text = "${marketData.marketCapRank}"
+            itemBinding.textViewRank.text = marketData.marketCapRank.formatShortForm()
             itemBinding.textViewCoin.text = marketData.symbol.uppercase()
             itemBinding.textViewPrice.text = marketData.currentPrice.formatLargeAmount()
             itemBinding.textViewChange.text = marketData.priceChangePercentage24h.formatPercentage()

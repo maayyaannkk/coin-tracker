@@ -16,13 +16,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="start"
-            android:gravity="end"
-            android:maxLength="4"
+            android:gravity="center"
+            android:maxLength="5"
             android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.075"
+            app:layout_constraintWidth_percent="0.08"
             tools:text="1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +50,7 @@
                 style="?attr/textAppearanceBodyMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
             style="?attr/textAppearanceBodyMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/linearLayoutCoin"
             app:layout_constraintTop_toTopOf="parent"
@@ -75,11 +75,11 @@
             style="?attr/textAppearanceBodyMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/textViewPrice"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.175"
+            app:layout_constraintWidth_percent="0.18"
             tools:text="1.02%" />
 
         <TextView
@@ -87,7 +87,7 @@
             style="?attr/textAppearanceBodyMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/textViewChange"
             app:layout_constraintTop_toTopOf="parent"

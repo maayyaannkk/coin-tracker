@@ -169,37 +169,20 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun toggleWatchlist(marketData: MarketData) {
+    fun toggleWatchlist(id: String, symbol: String, name: String, image: String, rank: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (watchlistDao.delete(marketData.id) == 0)
-                addToWatchlist(
-                    marketData.id,
-                    marketData.symbol,
-                    marketData.name,
-                    marketData.image,
-                    marketData.marketCapRank
-                )
-        }
-    }
-
-    fun toggleWatchlist(watchlistData: WatchlistData) {
-        viewModelScope.launch(Dispatchers.IO) {
-            watchlistDao.delete(watchlistData.id)
-        }
-    }
-
-    private fun addToWatchlist(id: String, symbol: String, name: String, image: String, rank: Int) {
-        val watchlistData =
-            WatchlistData(
-                id = id,
-                symbol = symbol,
-                name = name,
-                image = image,
-                marketCapRank = rank
-            )
-        viewModelScope.launch(Dispatchers.IO) {
-            watchlistDao.insert(watchlistData)
-            requestWatchlist()
+            if (watchlistDao.delete(id) == 0) {
+                val watchlistData =
+                    WatchlistData(
+                        id = id,
+                        symbol = symbol,
+                        name = name,
+                        image = image,
+                        marketCapRank = rank
+                    )
+                watchlistDao.insert(watchlistData)
+                requestWatchlist()
+            }
         }
     }
 }

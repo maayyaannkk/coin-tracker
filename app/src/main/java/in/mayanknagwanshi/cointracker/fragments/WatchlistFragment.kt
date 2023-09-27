@@ -40,7 +40,13 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
         val watchListAdapter = WatchListAdapter()
         watchListAdapter.onFavoriteClick = { watchlistData ->
-            viewModel.toggleWatchlist(watchlistData)
+            viewModel.toggleWatchlist(
+                watchlistData.id,
+                watchlistData.symbol,
+                watchlistData.name,
+                watchlistData.image,
+                watchlistData.marketCapRank
+            )
         }
         binding.progressRecyclerView.recyclerView.adapter = watchListAdapter
 

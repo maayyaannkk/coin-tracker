@@ -13,6 +13,7 @@ import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemWatchlistBinding
 import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
 import `in`.mayanknagwanshi.cointracker.util.formatPercentage
+import `in`.mayanknagwanshi.cointracker.util.formatShortForm
 import `in`.mayanknagwanshi.cointracker.util.getTimeAgo
 import java.text.DecimalFormat
 
@@ -35,7 +36,7 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
         RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(watchlistData: WatchlistData) {
-            itemBinding.textViewRank.text = "${watchlistData.marketCapRank}"
+            itemBinding.textViewRank.text = watchlistData.marketCapRank.formatShortForm()
             itemBinding.textViewCoin.text = watchlistData.symbol?.uppercase() ?: ""
             itemBinding.textViewPrice.text = watchlistData.currentPrice?.formatLargeAmount() ?: ""
             itemBinding.textViewChange.text =

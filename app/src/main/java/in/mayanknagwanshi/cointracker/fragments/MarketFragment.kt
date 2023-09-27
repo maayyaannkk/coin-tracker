@@ -44,7 +44,13 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
 
         val marketListAdapter = MarketListAdapter()
         marketListAdapter.onFavoriteClick = { marketData ->
-            viewModel.toggleWatchlist(marketData)
+            viewModel.toggleWatchlist(
+                marketData.id,
+                marketData.symbol,
+                marketData.name,
+                marketData.image,
+                marketData.marketCapRank
+            )
         }
         binding.progressRecyclerView.recyclerView.adapter = marketListAdapter
 

@@ -17,5 +17,7 @@ data class TrendingData(
     @SerializedName("large")
     val image: String,
     @SerializedName("score")
-    val score: Int
-)
+    val score: Int,
+    var isFavorite: Boolean = false
+) {
+}

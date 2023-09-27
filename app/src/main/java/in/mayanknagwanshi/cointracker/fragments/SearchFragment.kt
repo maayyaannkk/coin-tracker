@@ -54,6 +54,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.requestTrending()
 
         val trendingListAdapter = TrendingListAdapter()
+        trendingListAdapter.onFavoriteClick = { trendingData ->
+            viewModel.toggleWatchlist(
+                trendingData.id,
+                trendingData.symbol,
+                trendingData.name,
+                trendingData.image,
+                trendingData.marketCapRank
+            )
+        }
         binding.progressRecyclerViewTrending.recyclerView.adapter = trendingListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -66,7 +75,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                         is NetworkResult.Success -> {
                             binding.progressRecyclerViewTrending.showRecyclerView()
-                            trendingListAdapter.differ.submitList(event.data)
+                            trendingListAdapter.formatAndNotify(event.data)
                         }
 
                         is NetworkResult.Loading -> {
@@ -77,10 +86,27 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favoriteList.collect { event ->
+                    trendingListAdapter.selectedList = event.toMutableList()
+                }
+            }
+        }
     }
 
     private fun setupSearch() {
         val searchListAdapter = SearchListAdapter()
+        searchListAdapter.onFavoriteClick = { searchData ->
+            viewModel.toggleWatchlist(
+                searchData.id,
+                searchData.symbol,
+                searchData.name,
+                searchData.image,
+                searchData.marketCapRank
+            )
+        }
         binding.progressRecyclerViewCoins.recyclerView.adapter = searchListAdapter
 
         var job: Job? = null
@@ -101,6 +127,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchData.collect { event ->
@@ -111,7 +138,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                         is NetworkResult.Success -> {
                             binding.progressRecyclerViewCoins.showRecyclerView()
-                            searchListAdapter.differ.submitList(event.data)
+                            searchListAdapter.formatAndNotify(event.data)
                         }
 
                         is NetworkResult.Loading -> {
@@ -119,6 +146,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             else binding.progressRecyclerViewCoins.hideProgress()
                         }
                     }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favoriteList.collect { event ->
+                    searchListAdapter.selectedList = event.toMutableList()
                 }
             }
         }

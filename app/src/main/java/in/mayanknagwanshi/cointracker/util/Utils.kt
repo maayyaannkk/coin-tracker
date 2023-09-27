@@ -1,7 +1,6 @@
 package `in`.mayanknagwanshi.cointracker.util
 
 import android.text.format.DateUtils
-import java.text.DateFormat
 import java.util.Date
 import kotlin.math.pow
 
@@ -21,6 +20,18 @@ fun Double.formatLargeAmount(currencySymbol: String = "$"): String {
 
 fun Double.formatPercentage(): String {
     return String.format("%.2f%%", if (this > 0) this else this * -1)
+}
+
+fun Int.formatShortForm(precision: Int = 1): String {
+    if (this >= (1 * 10.0.pow(12)))
+        return String.format("%.${precision}fT", this / 10.0.pow(12))
+    if (this >= (1 * 10.0.pow(9)))
+        return String.format("%.${precision}fB", this / 10.0.pow(9))
+    else if (this >= (1 * 10.0.pow(6)))
+        return String.format("%.${precision}fM", this / 10.0.pow(6))
+    else if (this >= (1 * 10.0.pow(3)))
+        return String.format("%.${precision}fK", this / 10.0.pow(3))
+    return String.format("%d", this)
 }
 
 fun Date.getTimeAgo(): String? {
@@ -53,6 +64,7 @@ fun Date.getTimeAgo(): String? {
 /**
  * 1. integrate watchlist api and run when app open
  * 3. display last updated time on watchlist (times ago)
+ * 8. add to watchlist from search and trending
  *
  * App TODO list
  * 4. create and display calculator ui (use only top 10 coins for now - later can do with watchlist)

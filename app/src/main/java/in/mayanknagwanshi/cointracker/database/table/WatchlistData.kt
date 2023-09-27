@@ -12,17 +12,17 @@ data class WatchlistData(
     @SerializedName("id")
     val id: String,
     @SerializedName("symbol")
-    val symbol: String? = null,
+    val symbol: String,
     @SerializedName("name")
-    val name: String? = null,
+    val name: String,
     @SerializedName("image")
-    val image: String? = null,
+    val image: String,
     @SerializedName("current_price")
     val currentPrice: Double? = null,
     @SerializedName("market_cap")
     val marketCap: Double? = null,
     @SerializedName("market_cap_rank")
-    val marketCapRank: Int? = null,
+    val marketCapRank: Int,
     @SerializedName("price_change_24h")
     val priceChange24h: Double? = null,
     @SerializedName("price_change_percentage_24h")
