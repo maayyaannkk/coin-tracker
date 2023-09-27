@@ -19,3 +19,14 @@ fun Double.formatLargeAmount(currencySymbol: String = "$"): String {
 fun Double.formatPercentage(): String {
     return String.format("%.2f%%", if (this > 0) this else this * -1)
 }
+
+/**
+ * App TODO list
+ * 1. integrate watchlist api and run when app open
+ * 2. integrate watchlist with update frequency using work manager
+ * 3. display last updated time on watchlist (times ago)
+ * 4. create and display calculator ui (use only top 10 coins for now - later can do with watchlist)
+ * 5. integrate calculator api with calculator ui
+ * 6. add supported currency in settings
+ * 7. integrate supported currency in market and watchlist
+ */
