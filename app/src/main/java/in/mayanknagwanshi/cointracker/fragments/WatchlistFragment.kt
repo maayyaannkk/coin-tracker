@@ -46,6 +46,9 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                viewModel.requestWatchlist()
+
                 viewModel.watchlistData.collect { event ->
                     watchListAdapter.differ.submitList(event)
                     if (event.isEmpty()) {

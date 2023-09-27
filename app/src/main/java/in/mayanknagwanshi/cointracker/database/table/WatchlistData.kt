@@ -12,24 +12,24 @@ data class WatchlistData(
     @SerializedName("id")
     val id: String,
     @SerializedName("symbol")
-    val symbol: String,
+    val symbol: String? = null,
     @SerializedName("name")
-    val name: String,
+    val name: String? = null,
     @SerializedName("image")
-    val image: String,
+    val image: String? = null,
     @SerializedName("current_price")
-    val currentPrice: Double,
+    val currentPrice: Double? = null,
     @SerializedName("market_cap")
-    val marketCap: Double,
+    val marketCap: Double? = null,
     @SerializedName("market_cap_rank")
-    val marketCapRank: Int,
+    val marketCapRank: Int? = null,
     @SerializedName("price_change_24h")
-    val priceChange24h: Double,
+    val priceChange24h: Double? = null,
     @SerializedName("price_change_percentage_24h")
-    val priceChangePercentage24h: Double,
+    val priceChangePercentage24h: Double? = null,
     @SerializedName("last_updated")
-    val lastUpdated: String,
-    val lastSynced: Date
+    val lastUpdated: String? = null,
+    val lastSynced: Date? = null
 )
 
 class DateConverter {

@@ -13,6 +13,7 @@ import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.databinding.ListItemWatchlistBinding
 import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
 import `in`.mayanknagwanshi.cointracker.util.formatPercentage
+import `in`.mayanknagwanshi.cointracker.util.getTimeAgo
 import java.text.DecimalFormat
 
 class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHolder>() {
@@ -35,11 +36,21 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
 
         fun bind(watchlistData: WatchlistData) {
             itemBinding.textViewRank.text = "${watchlistData.marketCapRank}"
-            itemBinding.textViewCoin.text = watchlistData.symbol.uppercase()
-            itemBinding.textViewPrice.text = watchlistData.currentPrice.formatLargeAmount()
-            itemBinding.textViewChange.text = watchlistData.priceChangePercentage24h.formatPercentage()
-            itemBinding.textViewChange.setTextColor(if (watchlistData.priceChangePercentage24h > 0) Color.GREEN else Color.RED)
-            itemBinding.textViewMarketCap.text = watchlistData.marketCap.formatLargeAmount()
+            itemBinding.textViewCoin.text = watchlistData.symbol?.uppercase() ?: ""
+            itemBinding.textViewPrice.text = watchlistData.currentPrice?.formatLargeAmount() ?: ""
+            itemBinding.textViewChange.text =
+                watchlistData.priceChangePercentage24h?.formatPercentage() ?: ""
+            if (watchlistData.priceChangePercentage24h != null) itemBinding.textViewChange.setTextColor(
+                if (watchlistData.priceChangePercentage24h > 0) Color.GREEN else Color.RED
+            )
+            itemBinding.textViewMarketCap.text = watchlistData.marketCap?.formatLargeAmount() ?: ""
+            itemBinding.textViewLastUpdated.text =
+                if (watchlistData.lastSynced != null)
+                    itemBinding.textViewLastUpdated.context.getString(
+                        R.string.label_last_updated,
+                        watchlistData.lastSynced.getTimeAgo()
+                    )
+                else ""
             itemBinding.imageViewCoin.load(watchlistData.image) {
                 crossfade(true)
                 placeholder(R.drawable.logo)

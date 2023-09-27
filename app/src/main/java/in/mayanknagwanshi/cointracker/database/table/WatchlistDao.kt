@@ -9,11 +9,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WatchlistDao {
-    @Query("SELECT * FROM watchlist")
+    @Query("SELECT * FROM watchlist order by marketCapRank asc")
     fun getAll(): Flow<List<WatchlistData>>
 
     @Query("SELECT id FROM watchlist")
     fun getAllIds(): Flow<List<String>>
+
+    @Query("SELECT id FROM watchlist")
+    fun getAllIdsAsList(): List<String>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(watchlistData: WatchlistData)

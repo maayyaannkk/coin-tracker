@@ -1,6 +1,7 @@
 package `in`.mayanknagwanshi.cointracker.viewmodel
 
 import android.app.Application
+import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -129,6 +130,26 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun requestWatchlist() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val ids = watchlistDao.getAllIdsAsList()
+                if (ids.isNotEmpty()) {
+                    val response = coinGeckoApi.getWatchlist(ids = TextUtils.join(",", ids))
+                    val result = response.body()
+                    if (response.isSuccessful && !result.isNullOrEmpty()) {
+                        for (marketData in result) {
+                            addToWatchlist(marketData)
+                        }
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+    }
+
     private fun addToWatchlist(marketData: MarketData) {
         val watchlistData = WatchlistData(
             id = marketData.id,
@@ -151,13 +172,34 @@ class MainViewModel @Inject constructor(
     fun toggleWatchlist(marketData: MarketData) {
         viewModelScope.launch(Dispatchers.IO) {
             if (watchlistDao.delete(marketData.id) == 0)
-                addToWatchlist(marketData)
+                addToWatchlist(
+                    marketData.id,
+                    marketData.symbol,
+                    marketData.name,
+                    marketData.image,
+                    marketData.marketCapRank
+                )
         }
     }
 
     fun toggleWatchlist(watchlistData: WatchlistData) {
         viewModelScope.launch(Dispatchers.IO) {
             watchlistDao.delete(watchlistData.id)
+        }
+    }
+
+    private fun addToWatchlist(id: String, symbol: String, name: String, image: String, rank: Int) {
+        val watchlistData =
+            WatchlistData(
+                id = id,
+                symbol = symbol,
+                name = name,
+                image = image,
+                marketCapRank = rank
+            )
+        viewModelScope.launch(Dispatchers.IO) {
+            watchlistDao.insert(watchlistData)
+            requestWatchlist()
         }
     }
 }

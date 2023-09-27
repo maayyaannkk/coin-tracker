@@ -3,102 +3,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
-
-    <TextView
-        android:id="@+id/textViewRank"
-        style="?attr/textAppearanceBodyMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="start"
-        android:gravity="end"
-        android:maxLength="4"
-        android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.075"
-        tools:text="1" />
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayoutCoin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewRank"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2">
-
-        <ImageView
-            android:id="@+id/imageViewCoin"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@id/textViewCoin"
-            app:layout_constraintEnd_toEndOf="@id/textViewCoin"
-            app:layout_constraintStart_toStartOf="@id/textViewCoin"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/textViewCoin"
+            android:id="@+id/textViewRank"
             style="?attr/textAppearanceBodyMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:gravity="end"
+            android:maxLength="4"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.075"
+            tools:text="1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutCoin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewRank"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2">
+
+            <ImageView
+                android:id="@+id/imageViewCoin"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo"
+                app:layout_constraintBottom_toTopOf="@id/textViewCoin"
+                app:layout_constraintEnd_toEndOf="@id/textViewCoin"
+                app:layout_constraintStart_toStartOf="@id/textViewCoin"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewCoin"
+                style="?attr/textAppearanceBodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewCoin"
+                tools:text="BTCBD" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textViewPrice"
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/linearLayoutCoin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2"
+            tools:text="$25,220" />
+
+        <TextView
+            android:id="@+id/textViewChange"
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewPrice"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.175"
+            tools:text="1.02%" />
+
+        <TextView
+            android:id="@+id/textViewMarketCap"
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewChange"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.25"
+            tools:text="$251.22B" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonFavorite"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_favorite_selected"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageViewCoin"
-            tools:text="BTCBD" />
+            app:layout_constraintStart_toEndOf="@id/textViewMarketCap"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textViewPrice"
-        style="?attr/textAppearanceBodyMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/linearLayoutCoin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2"
-        tools:text="$25,220" />
-
-    <TextView
-        android:id="@+id/textViewChange"
-        style="?attr/textAppearanceBodyMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewPrice"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.175"
-        tools:text="1.02%" />
-
-    <TextView
-        android:id="@+id/textViewMarketCap"
-        style="?attr/textAppearanceBodyMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewChange"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.25"
-        tools:text="$251.22B" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonFavorite"
-        style="?attr/materialIconButtonStyle"
+        android:id="@+id/textViewLastUpdated"
+        style="?attr/textAppearanceLabelSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_favorite_selected"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewMarketCap"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.1" />
+        tools:text="15 mins ago" />
 </androidx.constraintlayout.widget.ConstraintLayout>
