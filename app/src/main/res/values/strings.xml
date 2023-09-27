@@ -5,7 +5,7 @@
     <string name="menu_item_market">Market</string>
     <string name="menu_item_watchlist">Watchlist</string>
     <string name="menu_item_search">Search</string>
-    <string name="menu_item_news">News</string>
+    <string name="menu_item_calculator">Calculator</string>
     <string name="menu_item_settings">Settings</string>
 
     <!-- Market and watchlist -->

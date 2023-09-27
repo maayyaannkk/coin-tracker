@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.databinding.ActivityMainBinding
 import `in`.mayanknagwanshi.cointracker.fragments.MarketFragment
-import `in`.mayanknagwanshi.cointracker.fragments.NewsFragment
+import `in`.mayanknagwanshi.cointracker.fragments.CalculatorFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SearchFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SettingsFragment
 import `in`.mayanknagwanshi.cointracker.fragments.WatchlistFragment
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.menuItemNews -> {
+                R.id.menuItemCalculator -> {
                     binding.viewPager.currentItem = 3
                     true
                 }
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemMarket
                     1 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemWatchlist
                     2 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemSearch
-                    3 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemNews
+                    3 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemCalculator
                     4 -> binding.bottomNavigationView.selectedItemId = R.id.menuItemSettings
                 }
             }
@@ -87,7 +87,7 @@ class ViewPagerAdapter(activity: MainActivity) : FragmentStateAdapter(activity) 
             0 -> MarketFragment()
             1 -> WatchlistFragment()
             2 -> SearchFragment()
-            3 -> NewsFragment()
+            3 -> CalculatorFragment()
             else -> SettingsFragment()
         }
     }
