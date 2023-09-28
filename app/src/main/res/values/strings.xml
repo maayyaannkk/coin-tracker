@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">CoinTracker</string>
 
+    <string name="error_internet">Network error</string>
+    <string name="error_watchlist_empty">Nothing to watch</string>
+    <string name="error_generic_empty">Nothing to display</string>
+
     <!-- Main Menu -->
     <string name="menu_item_market">Market</string>
     <string name="menu_item_watchlist">Watchlist</string>
@@ -25,6 +29,11 @@
     <string name="label_settings_app">App Settings</string>
     <string name="label_settings_others">Others</string>
 
+    <!-- Calculator -->
+    <string name="hint_currency">Currency</string>
+    <string name="hint_amount">Amount</string>
+
+    <!-- Settings -->
     <string name="label_setting_dark_mode">Dark Mode</string>
     <string name="label_setting_currency">Currency</string>
     <string name="label_setting_language">Language</string>
@@ -33,7 +42,4 @@
     <string name="label_setting_privacy_policy">Privacy Policy</string>
     <string name="label_setting_terms">Terms &amp; Conditions</string>
     <string name="label_setting_powered_by">Powered by: CoinGecko</string>
-    <string name="error_internet">Network error</string>
-    <string name="error_watchlist_empty">Nothing to watch</string>
-    <string name="error_generic_empty">Nothing to display</string>
 </resources>

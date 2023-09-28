@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import `in`.mayanknagwanshi.cointracker.data.CalculatorData
 import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.data.TrendingData
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okio.IOException
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.Date
 import javax.inject.Inject
@@ -41,8 +43,13 @@ class MainViewModel @Inject constructor(
         MutableStateFlow<NetworkResult<List<SearchData>>>(NetworkResult.Success(listOf()))
     val searchData: StateFlow<NetworkResult<List<SearchData>>> = _searchData
 
+    private val _calculatorData =
+        MutableStateFlow<NetworkResult<JSONObject>>(NetworkResult.Success(JSONObject()))
+    val calculatorData: StateFlow<NetworkResult<JSONObject>> = _calculatorData
+
     val watchlistData = watchlistDao.getAll()
     val favoriteList = watchlistDao.getAllIds()
+    val calculatorList = watchlistDao.getAllForCalculator()
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -144,6 +151,39 @@ class MainViewModel @Inject constructor(
                     }
                 }
             } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+    fun requestSimpleTokenPrice(currency: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val ids = watchlistDao.getAllIdsAsList()
+                if (ids.isNotEmpty()) {
+                    _calculatorData.value = NetworkResult.Loading(true)
+                    val response = coinGeckoApi.getSimplePrice(
+                        ids = TextUtils.join(",", ids),
+                        currency = currency
+                    )
+                    val result = response.body()?.string()
+                    _calculatorData.value = NetworkResult.Loading(false)
+
+                    if (response.isSuccessful && !TextUtils.isEmpty(result)) {
+                        try {
+                            val responseJson = result?.let { JSONObject(it) }
+                            responseJson?.put("currency",currency)
+                            _calculatorData.value = NetworkResult.Success(responseJson!!)
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                            _calculatorData.value = NetworkResult.Error(1, e.message)
+                        }
+                    }
+                }
+            } catch (e: IOException) {
+                _calculatorData.value = NetworkResult.Loading(false)
+                _calculatorData.value = NetworkResult.Error(1, e.message)
                 e.printStackTrace()
             }
 

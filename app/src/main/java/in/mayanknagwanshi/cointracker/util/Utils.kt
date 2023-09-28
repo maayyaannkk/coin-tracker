@@ -65,10 +65,11 @@ fun Date.getTimeAgo(): String? {
  * 1. integrate watchlist api and run when app open
  * 3. display last updated time on watchlist (times ago)
  * 8. add to watchlist from search and trending
- *
- * App TODO list
  * 4. create and display calculator ui (use only top 10 coins for now - later can do with watchlist)
  * 5. integrate calculator api with calculator ui
+ *
+ * App TODO list
+ * 9. remove currency util and add to room
  * 6. add supported currency in settings
  * 7. integrate supported currency in market and watchlist
  * 2. integrate watchlist with update frequency using work manager
