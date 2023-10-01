@@ -1,8 +1,10 @@
 package `in`.mayanknagwanshi.cointracker.activities
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,15 +15,19 @@ import `in`.mayanknagwanshi.cointracker.fragments.CalculatorFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SearchFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SettingsFragment
 import `in`.mayanknagwanshi.cointracker.fragments.WatchlistFragment
+import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.insertCurrencies()
 
         setupViewPager()
     }

@@ -1,6 +1,11 @@
 package `in`.mayanknagwanshi.cointracker.util
 
+import android.content.Context
+import android.content.res.AssetManager
 import android.text.format.DateUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import `in`.mayanknagwanshi.cointracker.database.table.CurrencyFiatData
 import java.util.Date
 import kotlin.math.pow
 
@@ -61,15 +66,25 @@ fun Date.getTimeAgo(): String? {
     }
 }
 
+fun AssetManager.readAssetsFile(fileName: String): String =
+    open(fileName).bufferedReader().use { it.readText() }
+
+val supportedCurrenciesFiat = fun(context: Context): List<CurrencyFiatData> {
+    return Gson().fromJson(
+        context.assets.readAssetsFile("currency.json"),
+        object : TypeToken<List<CurrencyFiatData>>() {}.type
+    )
+}
+
 /**
  * 1. integrate watchlist api and run when app open
  * 3. display last updated time on watchlist (times ago)
  * 8. add to watchlist from search and trending
  * 4. create and display calculator ui (use only top 10 coins for now - later can do with watchlist)
  * 5. integrate calculator api with calculator ui
+ * 9. remove currency util and add to room
  *
  * App TODO list
- * 9. remove currency util and add to room
  * 6. add supported currency in settings
  * 7. integrate supported currency in market and watchlist
  * 2. integrate watchlist with update frequency using work manager

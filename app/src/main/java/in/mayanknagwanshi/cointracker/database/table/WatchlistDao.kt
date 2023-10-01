@@ -28,6 +28,6 @@ interface WatchlistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(watchlistData: List<WatchlistData>)
 
-    @Query("Delete from watchlist where id=:id")
-    fun delete(id: String): Int
+    @Query("Delete from watchlist where id = :coinId")
+    fun delete(coinId: String): Int
 }

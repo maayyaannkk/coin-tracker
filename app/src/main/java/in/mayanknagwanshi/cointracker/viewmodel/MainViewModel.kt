@@ -6,14 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import `in`.mayanknagwanshi.cointracker.data.CalculatorData
 import `in`.mayanknagwanshi.cointracker.data.MarketData
 import `in`.mayanknagwanshi.cointracker.data.SearchData
 import `in`.mayanknagwanshi.cointracker.data.TrendingData
+import `in`.mayanknagwanshi.cointracker.database.table.CurrencyFiatDao
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistDao
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
+import `in`.mayanknagwanshi.cointracker.util.supportedCurrenciesFiat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val coinGeckoApi: CoinGeckoApi,
     private val watchlistDao: WatchlistDao,
+    private val currencyFiatDao: CurrencyFiatDao,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -50,6 +52,7 @@ class MainViewModel @Inject constructor(
     val watchlistData = watchlistDao.getAll()
     val favoriteList = watchlistDao.getAllIds()
     val calculatorList = watchlistDao.getAllForCalculator()
+    var currencyList = currencyFiatDao.getAllAsStringList()
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -173,7 +176,7 @@ class MainViewModel @Inject constructor(
                     if (response.isSuccessful && !TextUtils.isEmpty(result)) {
                         try {
                             val responseJson = result?.let { JSONObject(it) }
-                            responseJson?.put("currency",currency)
+                            responseJson?.put("currency", currency)
                             _calculatorData.value = NetworkResult.Success(responseJson!!)
                         } catch (e: JSONException) {
                             e.printStackTrace()
@@ -223,6 +226,12 @@ class MainViewModel @Inject constructor(
                 watchlistDao.insert(watchlistData)
                 requestWatchlist()
             }
+        }
+    }
+
+    fun insertCurrencies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            currencyFiatDao.insertAll(supportedCurrenciesFiat.invoke(getApplication()))
         }
     }
 }

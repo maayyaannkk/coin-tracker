@@ -2,16 +2,21 @@ package `in`.mayanknagwanshi.cointracker.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import `in`.mayanknagwanshi.cointracker.database.CoinTrackerDatabase
+import `in`.mayanknagwanshi.cointracker.database.table.CurrencyFiatDao
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistDao
 import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
+import `in`.mayanknagwanshi.cointracker.util.supportedCurrenciesFiat
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,5 +57,11 @@ class ViewModelModule {
     @ViewModelScoped
     fun provideWatchlistDao(database: CoinTrackerDatabase): WatchlistDao {
         return database.watchlistDao()
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideCurrencyDao(database: CoinTrackerDatabase): CurrencyFiatDao {
+        return database.currencyFiatDao()
     }
 }

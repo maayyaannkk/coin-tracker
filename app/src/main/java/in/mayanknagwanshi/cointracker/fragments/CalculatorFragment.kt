@@ -4,10 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,14 +15,11 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.adapter.CalculatorListAdapter
-import `in`.mayanknagwanshi.cointracker.adapter.TrendingListAdapter
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentCalculatorBinding
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
-import `in`.mayanknagwanshi.cointracker.util.currencyNameList
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
@@ -61,9 +54,6 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                     adapterView.adapter.getItem((position)).toString().substring(0, 3)
                 )
             }
-        materialAutoCompleteTextView.setSimpleItems(
-            currencyNameList.toTypedArray()
-        )
 
         var job: Job? = null
         binding.textInputAmount.editText?.doAfterTextChanged { text ->
@@ -72,6 +62,14 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
                 delay(750L)
                 if (text.toString().toDoubleOrNull() != null)
                     calculatorListAdapter.setConversionData(text.toString().toDouble())
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.currencyList.collect { event ->
+                    materialAutoCompleteTextView.setSimpleItems(event.toTypedArray())
+                }
             }
         }
 

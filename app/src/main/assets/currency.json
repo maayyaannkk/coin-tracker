@@ -1,0 +1,228 @@
+[
+  {
+    "abbr": "USD",
+    "name": "US Dollar",
+    "symbol": "$",
+    "isPreference": true
+  },
+  {
+    "abbr": "AED",
+    "name": "United Arab Emirates Dirham",
+    "symbol": "د.إ"
+  },
+  {
+    "abbr": "ARS",
+    "name": "Argentine Peso",
+    "symbol": "$"
+  },
+  {
+    "abbr": "AUD",
+    "name": "Australian Dollar",
+    "symbol": "$"
+  },
+  {
+    "abbr": "BDT",
+    "name": "Bangladeshi Taka",
+    "symbol": "৳"
+  },
+  {
+    "abbr": "BHD",
+    "name": "Bahraini Dinar",
+    "symbol": ".د.ب"
+  },
+  {
+    "abbr": "BMD",
+    "name": "Bermudian Dollar",
+    "symbol": "$"
+  },
+  {
+    "abbr": "BRL",
+    "name": "Brazilian Real",
+    "symbol": "R$"
+  },
+  {
+    "abbr": "CAD",
+    "name": "Canadian Dollar",
+    "symbol": "$"
+  },
+  {
+    "abbr": "CHF",
+    "name": "Swiss Franc",
+    "symbol": "Fr."
+  },
+  {
+    "abbr": "CLP",
+    "name": "Chilean Peso",
+    "symbol": "$"
+  },
+  {
+    "abbr": "CNY",
+    "name": "Chinese Yuan Renminbi",
+    "symbol": "¥"
+  },
+  {
+    "abbr": "CZK",
+    "name": "Czech Koruna",
+    "symbol": "Kč"
+  },
+  {
+    "abbr": "DKK",
+    "name": "Danish Krone",
+    "symbol": "kr."
+  },
+  {
+    "abbr": "EUR",
+    "name": "Euro",
+    "symbol": "€"
+  },
+  {
+    "abbr": "GBP",
+    "name": "British Pound Sterling",
+    "symbol": "£"
+  },
+  {
+    "abbr": "HKD",
+    "name": "Hong Kong Dollar",
+    "symbol": "HK$"
+  },
+  {
+    "abbr": "HUF",
+    "name": "Hungarian Forint",
+    "symbol": "Ft"
+  },
+  {
+    "abbr": "IDR",
+    "name": "Indonesian Rupiah",
+    "symbol": "Rp"
+  },
+  {
+    "abbr": "ILS",
+    "name": "Israeli New Sheqel",
+    "symbol": "₪"
+  },
+  {
+    "abbr": "INR",
+    "name": "Indian Rupee",
+    "symbol": "₹"
+  },
+  {
+    "abbr": "JPY",
+    "name": "Japanese Yen",
+    "symbol": "¥"
+  },
+  {
+    "abbr": "KRW",
+    "name": "South Korean Won",
+    "symbol": "₩"
+  },
+  {
+    "abbr": "KWD",
+    "name": "Kuwaiti Dinar",
+    "symbol": "د.ك"
+  },
+  {
+    "abbr": "LKR",
+    "name": "Sri Lankan Rupee",
+    "symbol": "රු"
+  },
+  {
+    "abbr": "MMK",
+    "name": "Myanmar Kyat",
+    "symbol": "Ks"
+  },
+  {
+    "abbr": "MXN",
+    "name": "Mexican Peso",
+    "symbol": "$"
+  },
+  {
+    "abbr": "MYR",
+    "name": "Malaysian Ringgit",
+    "symbol": "RM"
+  },
+  {
+    "abbr": "NGN",
+    "name": "Nigerian Naira",
+    "symbol": "₦"
+  },
+  {
+    "abbr": "NOK",
+    "name": "Norwegian Krone",
+    "symbol": "kr"
+  },
+  {
+    "abbr": "NZD",
+    "name": "New Zealand Dollar",
+    "symbol": "$"
+  },
+  {
+    "abbr": "PHP",
+    "name": "Philippine Peso",
+    "symbol": "₱"
+  },
+  {
+    "abbr": "PKR",
+    "name": "Pakistani Rupee",
+    "symbol": "₨"
+  },
+  {
+    "abbr": "PLN",
+    "name": "Polish Złoty",
+    "symbol": "zł"
+  },
+  {
+    "abbr": "RUB",
+    "name": "Russian Ruble",
+    "symbol": "₽"
+  },
+  {
+    "abbr": "SAR",
+    "name": "Saudi Riyal",
+    "symbol": "﷼"
+  },
+  {
+    "abbr": "SEK",
+    "name": "Swedish Krona",
+    "symbol": "kr"
+  },
+  {
+    "abbr": "SGD",
+    "name": "Singapore Dollar",
+    "symbol": "$"
+  },
+  {
+    "abbr": "THB",
+    "name": "Thai Baht",
+    "symbol": "฿"
+  },
+  {
+    "abbr": "TRY",
+    "name": "Turkish Lira",
+    "symbol": "₺"
+  },
+  {
+    "abbr": "TWD",
+    "name": "New Taiwan Dollar",
+    "symbol": "NT$"
+  },
+  {
+    "abbr": "UAH",
+    "name": "Ukrainian Hryvnia",
+    "symbol": "₴"
+  },
+  {
+    "abbr": "VEF",
+    "name": "Venezuelan Bolívar",
+    "symbol": "Bs."
+  },
+  {
+    "abbr": "VND",
+    "name": "Vietnamese Dong",
+    "symbol": "₫"
+  },
+  {
+    "abbr": "ZAR",
+    "name": "South African Rand",
+    "symbol": "R"
+  }
+]
