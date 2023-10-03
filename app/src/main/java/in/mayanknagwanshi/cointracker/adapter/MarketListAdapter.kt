@@ -44,10 +44,12 @@ class MarketListAdapter : RecyclerView.Adapter<MarketListAdapter.MarketViewHolde
         fun bind(marketData: MarketData) {
             itemBinding.textViewRank.text = marketData.marketCapRank.formatShortForm()
             itemBinding.textViewCoin.text = marketData.symbol.uppercase()
-            itemBinding.textViewPrice.text = marketData.currentPrice.formatLargeAmount()
+            itemBinding.textViewPrice.text =
+                marketData.currentPrice.formatLargeAmount(marketData.currencyFiatData.currencySymbol)
             itemBinding.textViewChange.text = marketData.priceChangePercentage24h.formatPercentage()
             itemBinding.textViewChange.setTextColor(if (marketData.priceChangePercentage24h > 0) Color.GREEN else Color.RED)
-            itemBinding.textViewMarketCap.text = marketData.marketCap.formatLargeAmount()
+            itemBinding.textViewMarketCap.text =
+                marketData.marketCap.formatLargeAmount(marketData.currencyFiatData.currencySymbol)
             itemBinding.imageViewCoin.load(marketData.image) {
                 crossfade(true)
                 placeholder(R.drawable.logo)

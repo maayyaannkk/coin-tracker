@@ -16,6 +16,7 @@ import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.adapter.WatchListAdapter
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentWatchlistBinding
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -52,9 +53,14 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedCurrency.collect {
+                    viewModel.requestWatchlist()
+                }
+            }
+        }
 
-                viewModel.requestWatchlist()
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.watchlistData.collect { event ->
                     watchListAdapter.differ.submitList(event)
                     if (event.isEmpty()) {

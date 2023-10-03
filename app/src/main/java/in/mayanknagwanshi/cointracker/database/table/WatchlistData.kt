@@ -1,5 +1,6 @@
 package `in`.mayanknagwanshi.cointracker.database.table
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -29,7 +30,9 @@ data class WatchlistData(
     val priceChangePercentage24h: Double? = null,
     @SerializedName("last_updated")
     val lastUpdated: String? = null,
-    val lastSynced: Date? = null
+    val lastSynced: Date? = null,
+    @Embedded
+    var currencyFiatData: CurrencyFiatData?=null
 )
 
 class DateConverter {

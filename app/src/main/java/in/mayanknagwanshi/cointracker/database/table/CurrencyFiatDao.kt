@@ -12,7 +12,7 @@ interface CurrencyFiatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(watchlistData: List<CurrencyFiatData>)
 
-    @Query("SELECT abbr || ' (' || symbol || ')' FROM currency_fiat order by isPreference desc")
+    @Query("SELECT abbr || ' (' || currencySymbol || ')' FROM currency_fiat order by isPreference desc")
     fun getAllAsStringList(): Flow<List<String>>
 
     @Query("SELECT abbr FROM currency_fiat where isPreference=1")
@@ -26,6 +26,9 @@ interface CurrencyFiatDao {
 
     @Query("SELECT count(*) FROM currency_fiat")
     fun getCount(): Int
+
+    @Query("SELECT * FROM currency_fiat where isPreference=1")
+    fun getSelected(): CurrencyFiatData
 
     @Transaction
     fun updatePreference(abbr: String) {

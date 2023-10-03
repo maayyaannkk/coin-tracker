@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "currency_fiat")
 data class CurrencyFiatData(
     @PrimaryKey val abbr: String,
-    val name: String,
-    val symbol: String,
+    val currencyName: String,
+    val currencySymbol: String,
     var isPreference: Boolean = false
 )

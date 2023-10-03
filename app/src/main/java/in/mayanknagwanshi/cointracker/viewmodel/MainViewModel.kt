@@ -59,11 +59,15 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _marketData.value = NetworkResult.Loading(true)
             try {
-                val response = coinGeckoApi.getMarket()
+                val currency = currencyFiatDao.getSelected()
+                val response = coinGeckoApi.getMarket(currency = currency.abbr)
                 _marketData.value = NetworkResult.Loading(false)
                 val result = response.body()
                 if (response.isSuccessful && !result.isNullOrEmpty()) {
-                    _marketData.value = NetworkResult.Success(result)
+                    _marketData.value = NetworkResult.Success(result.map {
+                        it.currencyFiatData = currency
+                        it
+                    })
                 } else {
                     _marketData.value =
                         NetworkResult.Error(response.code(), response.errorBody().toString())
@@ -146,10 +150,15 @@ class MainViewModel @Inject constructor(
             try {
                 val ids = watchlistDao.getAllIdsAsList()
                 if (ids.isNotEmpty()) {
-                    val response = coinGeckoApi.getWatchlist(ids = TextUtils.join(",", ids))
+                    val currency = currencyFiatDao.getSelected()
+                    val response = coinGeckoApi.getWatchlist(
+                        ids = TextUtils.join(",", ids),
+                        currency = currency.abbr
+                    )
                     val result = response.body()
                     if (response.isSuccessful && !result.isNullOrEmpty()) {
                         for (marketData in result) {
+                            marketData.currencyFiatData = currency
                             addToWatchlist(marketData)
                         }
                     }
@@ -206,7 +215,8 @@ class MainViewModel @Inject constructor(
             priceChange24h = marketData.priceChange24h,
             priceChangePercentage24h = marketData.priceChangePercentage24h,
             lastUpdated = marketData.lastUpdated,
-            lastSynced = Date()
+            lastSynced = Date(),
+            currencyFiatData = marketData.currencyFiatData
         )
         viewModelScope.launch(Dispatchers.IO) {
             watchlistDao.insert(watchlistData)

@@ -1,228 +1,228 @@
 [
   {
     "abbr": "USD",
-    "name": "US Dollar",
-    "symbol": "$",
+    "currencyName": "US Dollar",
+    "currencySymbol": "$",
     "isPreference": true
   },
   {
     "abbr": "AED",
-    "name": "United Arab Emirates Dirham",
-    "symbol": "د.إ"
+    "currencyName": "United Arab Emirates Dirham",
+    "currencySymbol": "د.إ"
   },
   {
     "abbr": "ARS",
-    "name": "Argentine Peso",
-    "symbol": "$"
+    "currencyName": "Argentine Peso",
+    "currencySymbol": "$"
   },
   {
     "abbr": "AUD",
-    "name": "Australian Dollar",
-    "symbol": "$"
+    "currencyName": "Australian Dollar",
+    "currencySymbol": "$"
   },
   {
     "abbr": "BDT",
-    "name": "Bangladeshi Taka",
-    "symbol": "৳"
+    "currencyName": "Bangladeshi Taka",
+    "currencySymbol": "৳"
   },
   {
     "abbr": "BHD",
-    "name": "Bahraini Dinar",
-    "symbol": ".د.ب"
+    "currencyName": "Bahraini Dinar",
+    "currencySymbol": ".د.ب"
   },
   {
     "abbr": "BMD",
-    "name": "Bermudian Dollar",
-    "symbol": "$"
+    "currencyName": "Bermudian Dollar",
+    "currencySymbol": "$"
   },
   {
     "abbr": "BRL",
-    "name": "Brazilian Real",
-    "symbol": "R$"
+    "currencyName": "Brazilian Real",
+    "currencySymbol": "R$"
   },
   {
     "abbr": "CAD",
-    "name": "Canadian Dollar",
-    "symbol": "$"
+    "currencyName": "Canadian Dollar",
+    "currencySymbol": "$"
   },
   {
     "abbr": "CHF",
-    "name": "Swiss Franc",
-    "symbol": "Fr."
+    "currencyName": "Swiss Franc",
+    "currencySymbol": "Fr."
   },
   {
     "abbr": "CLP",
-    "name": "Chilean Peso",
-    "symbol": "$"
+    "currencyName": "Chilean Peso",
+    "currencySymbol": "$"
   },
   {
     "abbr": "CNY",
-    "name": "Chinese Yuan Renminbi",
-    "symbol": "¥"
+    "currencyName": "Chinese Yuan Renminbi",
+    "currencySymbol": "¥"
   },
   {
     "abbr": "CZK",
-    "name": "Czech Koruna",
-    "symbol": "Kč"
+    "currencyName": "Czech Koruna",
+    "currencySymbol": "Kč"
   },
   {
     "abbr": "DKK",
-    "name": "Danish Krone",
-    "symbol": "kr."
+    "currencyName": "Danish Krone",
+    "currencySymbol": "kr."
   },
   {
     "abbr": "EUR",
-    "name": "Euro",
-    "symbol": "€"
+    "currencyName": "Euro",
+    "currencySymbol": "€"
   },
   {
     "abbr": "GBP",
-    "name": "British Pound Sterling",
-    "symbol": "£"
+    "currencyName": "British Pound Sterling",
+    "currencySymbol": "£"
   },
   {
     "abbr": "HKD",
-    "name": "Hong Kong Dollar",
-    "symbol": "HK$"
+    "currencyName": "Hong Kong Dollar",
+    "currencySymbol": "HK$"
   },
   {
     "abbr": "HUF",
-    "name": "Hungarian Forint",
-    "symbol": "Ft"
+    "currencyName": "Hungarian Forint",
+    "currencySymbol": "Ft"
   },
   {
     "abbr": "IDR",
-    "name": "Indonesian Rupiah",
-    "symbol": "Rp"
+    "currencyName": "Indonesian Rupiah",
+    "currencySymbol": "Rp"
   },
   {
     "abbr": "ILS",
-    "name": "Israeli New Sheqel",
-    "symbol": "₪"
+    "currencyName": "Israeli New Sheqel",
+    "currencySymbol": "₪"
   },
   {
     "abbr": "INR",
-    "name": "Indian Rupee",
-    "symbol": "₹"
+    "currencyName": "Indian Rupee",
+    "currencySymbol": "₹"
   },
   {
     "abbr": "JPY",
-    "name": "Japanese Yen",
-    "symbol": "¥"
+    "currencyName": "Japanese Yen",
+    "currencySymbol": "¥"
   },
   {
     "abbr": "KRW",
-    "name": "South Korean Won",
-    "symbol": "₩"
+    "currencyName": "South Korean Won",
+    "currencySymbol": "₩"
   },
   {
     "abbr": "KWD",
-    "name": "Kuwaiti Dinar",
-    "symbol": "د.ك"
+    "currencyName": "Kuwaiti Dinar",
+    "currencySymbol": "د.ك"
   },
   {
     "abbr": "LKR",
-    "name": "Sri Lankan Rupee",
-    "symbol": "රු"
+    "currencyName": "Sri Lankan Rupee",
+    "currencySymbol": "රු"
   },
   {
     "abbr": "MMK",
-    "name": "Myanmar Kyat",
-    "symbol": "Ks"
+    "currencyName": "Myanmar Kyat",
+    "currencySymbol": "Ks"
   },
   {
     "abbr": "MXN",
-    "name": "Mexican Peso",
-    "symbol": "$"
+    "currencyName": "Mexican Peso",
+    "currencySymbol": "$"
   },
   {
     "abbr": "MYR",
-    "name": "Malaysian Ringgit",
-    "symbol": "RM"
+    "currencyName": "Malaysian Ringgit",
+    "currencySymbol": "RM"
   },
   {
     "abbr": "NGN",
-    "name": "Nigerian Naira",
-    "symbol": "₦"
+    "currencyName": "Nigerian Naira",
+    "currencySymbol": "₦"
   },
   {
     "abbr": "NOK",
-    "name": "Norwegian Krone",
-    "symbol": "kr"
+    "currencyName": "Norwegian Krone",
+    "currencySymbol": "kr"
   },
   {
     "abbr": "NZD",
-    "name": "New Zealand Dollar",
-    "symbol": "$"
+    "currencyName": "New Zealand Dollar",
+    "currencySymbol": "$"
   },
   {
     "abbr": "PHP",
-    "name": "Philippine Peso",
-    "symbol": "₱"
+    "currencyName": "Philippine Peso",
+    "currencySymbol": "₱"
   },
   {
     "abbr": "PKR",
-    "name": "Pakistani Rupee",
-    "symbol": "₨"
+    "currencyName": "Pakistani Rupee",
+    "currencySymbol": "₨"
   },
   {
     "abbr": "PLN",
-    "name": "Polish Złoty",
-    "symbol": "zł"
+    "currencyName": "Polish Złoty",
+    "currencySymbol": "zł"
   },
   {
     "abbr": "RUB",
-    "name": "Russian Ruble",
-    "symbol": "₽"
+    "currencyName": "Russian Ruble",
+    "currencySymbol": "₽"
   },
   {
     "abbr": "SAR",
-    "name": "Saudi Riyal",
-    "symbol": "﷼"
+    "currencyName": "Saudi Riyal",
+    "currencySymbol": "﷼"
   },
   {
     "abbr": "SEK",
-    "name": "Swedish Krona",
-    "symbol": "kr"
+    "currencyName": "Swedish Krona",
+    "currencySymbol": "kr"
   },
   {
     "abbr": "SGD",
-    "name": "Singapore Dollar",
-    "symbol": "$"
+    "currencyName": "Singapore Dollar",
+    "currencySymbol": "$"
   },
   {
     "abbr": "THB",
-    "name": "Thai Baht",
-    "symbol": "฿"
+    "currencyName": "Thai Baht",
+    "currencySymbol": "฿"
   },
   {
     "abbr": "TRY",
-    "name": "Turkish Lira",
-    "symbol": "₺"
+    "currencyName": "Turkish Lira",
+    "currencySymbol": "₺"
   },
   {
     "abbr": "TWD",
-    "name": "New Taiwan Dollar",
-    "symbol": "NT$"
+    "currencyName": "New Taiwan Dollar",
+    "currencySymbol": "NT$"
   },
   {
     "abbr": "UAH",
-    "name": "Ukrainian Hryvnia",
-    "symbol": "₴"
+    "currencyName": "Ukrainian Hryvnia",
+    "currencySymbol": "₴"
   },
   {
     "abbr": "VEF",
-    "name": "Venezuelan Bolívar",
-    "symbol": "Bs."
+    "currencyName": "Venezuelan Bolívar",
+    "currencySymbol": "Bs."
   },
   {
     "abbr": "VND",
-    "name": "Vietnamese Dong",
-    "symbol": "₫"
+    "currencyName": "VietcurrencyNamese Dong",
+    "currencySymbol": "₫"
   },
   {
     "abbr": "ZAR",
-    "name": "South African Rand",
-    "symbol": "R"
+    "currencyName": "South African Rand",
+    "currencySymbol": "R"
   }
 ]

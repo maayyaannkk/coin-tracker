@@ -2,6 +2,7 @@ package `in`.mayanknagwanshi.cointracker.data
 
 
 import com.google.gson.annotations.SerializedName
+import `in`.mayanknagwanshi.cointracker.database.table.CurrencyFiatData
 
 data class MarketData(
     @SerializedName("id")
@@ -42,5 +43,6 @@ data class MarketData(
     val maxSupply: Double,
     @SerializedName("last_updated")
     val lastUpdated: String,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    var currencyFiatData: CurrencyFiatData
 )

@@ -38,13 +38,25 @@ class WatchListAdapter : RecyclerView.Adapter<WatchListAdapter.WatchlistViewHold
         fun bind(watchlistData: WatchlistData) {
             itemBinding.textViewRank.text = watchlistData.marketCapRank.formatShortForm()
             itemBinding.textViewCoin.text = watchlistData.symbol.uppercase()
-            itemBinding.textViewPrice.text = watchlistData.currentPrice?.formatLargeAmount() ?: ""
+
+            itemBinding.textViewPrice.text =
+                if (watchlistData.currencyFiatData != null) watchlistData.currentPrice?.formatLargeAmount(
+                    watchlistData.currencyFiatData?.currencySymbol!!
+                ) ?: ""
+                else watchlistData.currentPrice?.formatLargeAmount() ?: ""
+
             itemBinding.textViewChange.text =
                 watchlistData.priceChangePercentage24h?.formatPercentage() ?: ""
             if (watchlistData.priceChangePercentage24h != null) itemBinding.textViewChange.setTextColor(
                 if (watchlistData.priceChangePercentage24h > 0) Color.GREEN else Color.RED
             )
-            itemBinding.textViewMarketCap.text = watchlistData.marketCap?.formatLargeAmount() ?: ""
+
+            itemBinding.textViewMarketCap.text =
+                if (watchlistData.currencyFiatData != null) watchlistData.marketCap?.formatLargeAmount(
+                    watchlistData.currencyFiatData?.currencySymbol!!
+                ) ?: ""
+                else watchlistData.marketCap?.formatLargeAmount()
+
             itemBinding.textViewLastUpdated.text =
                 if (watchlistData.lastSynced != null)
                     itemBinding.textViewLastUpdated.context.getString(

@@ -84,9 +84,9 @@ val supportedCurrenciesFiat = fun(context: Context): List<CurrencyFiatData> {
  * 5. integrate calculator api with calculator ui
  * 9. remove currency util and add to room
  * 6. add supported currency in settings
+ * 7. integrate supported currency in market and watchlist
  *
  * App TODO list
- * 7. integrate supported currency in market and watchlist
  * 10. show dialog to select start screen
  * 2. integrate watchlist with update frequency using work manager
  */

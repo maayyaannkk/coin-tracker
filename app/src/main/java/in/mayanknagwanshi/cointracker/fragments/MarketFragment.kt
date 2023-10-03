@@ -37,8 +37,6 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.requestMarket()
-
         val divider = MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         binding.progressRecyclerView.recyclerView.addItemDecoration(divider)
 
@@ -53,6 +51,14 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
             )
         }
         binding.progressRecyclerView.recyclerView.adapter = marketListAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedCurrency.collect {
+                    viewModel.requestMarket()
+                }
+            }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
