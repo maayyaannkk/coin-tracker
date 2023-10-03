@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -20,7 +22,6 @@ import `in`.mayanknagwanshi.cointracker.databinding.DialogSearchListBinding
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentSettingsBinding
 import `in`.mayanknagwanshi.cointracker.util.SharedPrefUtil
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,8 +52,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
 
+        val screenList = listOf(
+            getString(R.string.menu_item_market),
+            getString(R.string.menu_item_watchlist),
+            getString(R.string.menu_item_search),
+            getString(R.string.menu_item_calculator)
+        )
+        binding.textViewDefaultScreen.text =
+            screenList[SharedPrefUtil.getStartScreenIndex(requireContext()) ]
+
         binding.linearLayoutCurrency.setOnClickListener {
-            showDialog()
+            showCurrencyDialog()
+        }
+
+        binding.linearLayoutDefaultScreen.setOnClickListener {
+            showDefaultScreenDialog(screenList)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -74,7 +88,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     }
 
-    private fun showDialog() {
+    private fun showCurrencyDialog() {
         val dialogBinding = DialogSearchListBinding.inflate(layoutInflater)
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
@@ -133,5 +147,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
         dialog.show()
+    }
+
+    private fun showDefaultScreenDialog(screenList: List<String>) {
+        val currentIndex = SharedPrefUtil.getStartScreenIndex(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
+            .setSingleChoiceItems(
+                screenList.toTypedArray(),
+                currentIndex
+            ) { dialog, checkedItemPosition ->
+                if (checkedItemPosition != AdapterView.INVALID_POSITION && checkedItemPosition != currentIndex) {
+                    SharedPrefUtil.saveStartScreenIndex(requireContext(), checkedItemPosition)
+                    binding.textViewDefaultScreen.text = screenList[checkedItemPosition ]
+                    (dialog as AlertDialog?)?.dismiss()
+                }
+            }
+            .show()
     }
 }

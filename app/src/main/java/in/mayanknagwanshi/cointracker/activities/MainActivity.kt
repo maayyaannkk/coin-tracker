@@ -15,6 +15,7 @@ import `in`.mayanknagwanshi.cointracker.fragments.CalculatorFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SearchFragment
 import `in`.mayanknagwanshi.cointracker.fragments.SettingsFragment
 import `in`.mayanknagwanshi.cointracker.fragments.WatchlistFragment
+import `in`.mayanknagwanshi.cointracker.util.SharedPrefUtil
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -80,6 +81,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        if (SharedPrefUtil.getStartScreenIndex(this) != 0)
+            binding.viewPager.currentItem = SharedPrefUtil.getStartScreenIndex(this)
     }
 }
 
