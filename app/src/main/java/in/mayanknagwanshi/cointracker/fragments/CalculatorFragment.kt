@@ -11,10 +11,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.adapter.CalculatorListAdapter
+import `in`.mayanknagwanshi.cointracker.adapter.SimpleTextListAdapter
+import `in`.mayanknagwanshi.cointracker.databinding.DialogSearchListBinding
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentCalculatorBinding
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
@@ -48,13 +51,6 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
         val materialAutoCompleteTextView =
             binding.textInputCurrency.editText as MaterialAutoCompleteTextView
 
-        materialAutoCompleteTextView
-            .setOnItemClickListener { adapterView, _, position, _ ->
-                viewModel.requestSimpleTokenPrice(
-                    adapterView.adapter.getItem((position)).toString().substring(0, 3)
-                )
-            }
-
         var job: Job? = null
         binding.textInputAmount.editText?.doAfterTextChanged { text ->
             job?.cancel()
@@ -68,7 +64,7 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.currencyList.collect { event ->
-                    materialAutoCompleteTextView.setSimpleItems(event.toTypedArray())
+                    materialAutoCompleteTextView.tag = event
                 }
             }
         }
@@ -110,5 +106,72 @@ class CalculatorFragment : Fragment(R.layout.fragment_calculator) {
             }
         }
 
+        fun showDialog() {
+            val dialogBinding = DialogSearchListBinding.inflate(layoutInflater)
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogBinding.root)
+                .create()
+
+            val textInputSearch = dialogBinding.textFieldSearch
+            val recyclerView = dialogBinding.recyclerView
+            val textViewError = dialogBinding.textViewError
+
+            fun toggleError(showError: Boolean) {
+                recyclerView.visibility = if (showError) View.GONE else View.VISIBLE
+                textViewError.visibility = if (showError) View.VISIBLE else View.GONE
+
+            }
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            val adapter = SimpleTextListAdapter()
+            adapter.onItemClick = { currency ->
+                val abbr = currency.substring(0, 3)
+                viewModel.requestSimpleTokenPrice(abbr)
+                materialAutoCompleteTextView.setText(abbr)
+                binding.textInputCurrency.tag = abbr
+                if (dialog.isShowing) dialog.dismiss()
+            }
+            recyclerView.adapter = adapter
+
+            val currencyList =
+                if (materialAutoCompleteTextView != null)
+                    materialAutoCompleteTextView.tag as MutableList<String>?
+                else mutableListOf()
+            val selectedCurrency =
+                if (binding.textInputCurrency.tag != null)
+                    binding.textInputCurrency.tag as String?
+                else null
+            adapter.selectedAbbr = selectedCurrency
+            adapter.differ.submitList(currencyList)
+
+            var job: Job? = null
+            textInputSearch.editText?.doAfterTextChanged {
+                job?.cancel()
+                job = lifecycleScope.launch {
+                    delay(750L)
+                    if (textInputSearch.editText!!.text.isNotEmpty()) {
+                        val searchString = textInputSearch.editText!!.text.toString().uppercase()
+                        val filteredList = currencyList?.filter { it.contains(searchString) }
+
+                        if (filteredList!!.isNotEmpty()) {
+                            toggleError(showError = false)
+                            adapter.differ.submitList(filteredList)
+                        } else {
+                            toggleError(showError = true)
+                        }
+                    } else {
+                        toggleError(showError = false)
+                        adapter.differ.submitList(currencyList)
+                    }
+
+                }
+            }
+            dialog.show()
+        }
+
+        binding.textInputCurrency.setEndIconOnClickListener { showDialog() }
+        materialAutoCompleteTextView.setOnClickListener { showDialog() }
     }
+
+
 }

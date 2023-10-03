@@ -53,6 +53,7 @@ class MainViewModel @Inject constructor(
     val favoriteList = watchlistDao.getAllIds()
     val calculatorList = watchlistDao.getAllForCalculator()
     var currencyList = currencyFiatDao.getAllAsStringList()
+    var selectedCurrency = currencyFiatDao.getSelectedAbbr()
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -231,7 +232,14 @@ class MainViewModel @Inject constructor(
 
     fun insertCurrencies() {
         viewModelScope.launch(Dispatchers.IO) {
-            currencyFiatDao.insertAll(supportedCurrenciesFiat.invoke(getApplication()))
+            if (currencyFiatDao.getCount() == 0)
+                currencyFiatDao.insertAll(supportedCurrenciesFiat.invoke(getApplication()))
+        }
+    }
+
+    fun updateCurrency(abbr: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            currencyFiatDao.updatePreference(abbr)
         }
     }
 }

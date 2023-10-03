@@ -96,6 +96,7 @@
                         android:layout_height="wrap_content" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLayoutCurrency"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -125,6 +126,7 @@
                         android:layout_height="wrap_content" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLayoutLanguage"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -144,8 +146,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
+                            android:text="English"
                             android:textAppearance="?attr/textAppearanceLabelMedium"
-                            tools:text="English" />
+                            tools:ignore="HardcodedText" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -155,6 +158,7 @@
                         android:layout_height="wrap_content" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLayoutDefaultScreen"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -174,8 +178,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:textAppearance="?attr/textAppearanceLabelMedium"
-                            tools:text="Home" />
+                            android:text="@string/menu_item_market"
+                            android:textAppearance="?attr/textAppearanceLabelMedium" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </com.google.android.material.card.MaterialCardView>
