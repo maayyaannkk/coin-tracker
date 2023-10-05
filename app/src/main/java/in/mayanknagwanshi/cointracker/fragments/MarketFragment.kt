@@ -17,6 +17,7 @@ import `in`.mayanknagwanshi.cointracker.R
 import `in`.mayanknagwanshi.cointracker.adapter.MarketListAdapter
 import `in`.mayanknagwanshi.cointracker.databinding.FragmentMarketBinding
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
+import `in`.mayanknagwanshi.cointracker.util.formatLargeAmount
 import `in`.mayanknagwanshi.cointracker.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
@@ -56,10 +57,35 @@ class MarketFragment : Fragment(R.layout.fragment_market) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.selectedCurrency.collect {
                     viewModel.requestMarket()
+                    viewModel.requestGlobal()
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.globalData.collect { event ->
+                    when (event) {
+                        is NetworkResult.Error -> {
+                            binding.linearLayoutMarketCap.visibility = View.GONE
+                        }
 
+                        is NetworkResult.Success -> {
+                            binding.linearLayoutMarketCap.visibility = View.VISIBLE
+                            val globalInfoData = event.data
+                            binding.textViewGlobalMarketCap.text =
+                                globalInfoData.globalMarketCap.formatLargeAmount(globalInfoData.currencyFiatData.currencySymbol)
+                            binding.textViewGlobalVolume.text =
+                                globalInfoData.globalVolume.formatLargeAmount(globalInfoData.currencyFiatData.currencySymbol)
+                        }
+
+                        is NetworkResult.Loading -> {
+                            if (event.isLoading) binding.progressRecyclerView.showProgress()
+                            else binding.progressRecyclerView.hideProgress()
+                        }
+                    }
+                }
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.marketData.collect { event ->

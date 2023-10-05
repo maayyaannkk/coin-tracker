@@ -2,6 +2,7 @@ package `in`.mayanknagwanshi.cointracker.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -14,6 +15,7 @@ import `in`.mayanknagwanshi.cointracker.database.table.WatchlistDao
 import `in`.mayanknagwanshi.cointracker.database.table.WatchlistData
 import `in`.mayanknagwanshi.cointracker.network.CoinGeckoApi
 import `in`.mayanknagwanshi.cointracker.network.NetworkResult
+import `in`.mayanknagwanshi.cointracker.util.GlobalInfoData
 import `in`.mayanknagwanshi.cointracker.util.supportedCurrenciesFiat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +34,10 @@ class MainViewModel @Inject constructor(
     private val currencyFiatDao: CurrencyFiatDao,
     application: Application
 ) : AndroidViewModel(application) {
+
+    private val _globalData =
+        MutableStateFlow<NetworkResult<GlobalInfoData>>(NetworkResult.Error(0, ""))
+    val globalData: StateFlow<NetworkResult<GlobalInfoData>> = _globalData
 
     private val _marketData =
         MutableStateFlow<NetworkResult<List<MarketData>>>(NetworkResult.Success(listOf()))
@@ -54,6 +60,38 @@ class MainViewModel @Inject constructor(
     val calculatorList = watchlistDao.getAllForCalculator()
     var currencyList = currencyFiatDao.getAllAsStringList()
     var selectedCurrency = currencyFiatDao.getSelectedAbbr()
+
+    fun requestGlobal() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _globalData.value = NetworkResult.Loading(true)
+            try {
+                val currency = currencyFiatDao.getSelected()
+                val response = coinGeckoApi.global()
+                _globalData.value = NetworkResult.Loading(false)
+                val result = response.body()
+                if (response.isSuccessful && result != null) {
+                    val jsonString = result.string()
+                    val globalObject = JSONObject(jsonString)
+                    val globalMC =
+                        globalObject.getJSONObject("data").getJSONObject("total_market_cap")
+                            .getDouble(currency.abbr.lowercase())
+                    val globalVolume =
+                        globalObject.getJSONObject("data").getJSONObject("total_volume")
+                            .getDouble(currency.abbr.lowercase())
+                    _globalData.value =
+                        NetworkResult.Success(GlobalInfoData(globalMC, globalVolume, currency))
+                } else {
+                    _globalData.value =
+                        NetworkResult.Error(response.code(), response.errorBody().toString())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _globalData.value = NetworkResult.Loading(false)
+                _globalData.value = NetworkResult.Error(0, e.message)
+            }
+
+        }
+    }
 
     fun requestMarket() {
         viewModelScope.launch(Dispatchers.IO) {

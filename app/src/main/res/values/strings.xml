@@ -19,6 +19,8 @@
     <string name="label_change">24h</string>
     <string name="label_market_cap">Market Cap</string>
     <string name="label_last_updated">Updated %s</string>
+    <string name="label_global_market_cap">Global Market Cap</string>
+    <string name="label_market_volume">24h Market Volume</string>
 
     <!-- Search -->
     <string name="hint_search">Search</string>

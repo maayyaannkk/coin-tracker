@@ -28,4 +28,7 @@ interface CoinGeckoApi {
 
     @GET("search")
     suspend fun search(@Query("query") search: String): Response<ResponseBody>
+
+    @GET("global")
+    suspend fun global(): Response<ResponseBody>
 }

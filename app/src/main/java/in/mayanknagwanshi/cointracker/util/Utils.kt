@@ -76,6 +76,12 @@ val supportedCurrenciesFiat = fun(context: Context): List<CurrencyFiatData> {
     )
 }
 
+data class GlobalInfoData(
+    val globalMarketCap: Double,
+    val globalVolume: Double,
+    val currencyFiatData: CurrencyFiatData
+)
+
 /**
  * 1. integrate watchlist api and run when app open
  * 3. display last updated time on watchlist (times ago)
@@ -86,7 +92,5 @@ val supportedCurrenciesFiat = fun(context: Context): List<CurrencyFiatData> {
  * 6. add supported currency in settings
  * 7. integrate supported currency in market and watchlist
  * 10. show dialog to select start screen
- *
- * App TODO list
- * 2. integrate watchlist with update frequency using work manager
+ * 2. doesn't make sense - integrate watchlist with update frequency using work manager
  */
