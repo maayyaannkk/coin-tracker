@@ -31,6 +31,6 @@ object SharedPrefUtil {
 
     fun getStartScreenIndex(context: Context): Int {
         val sharedPref = context.getSharedPreferences(prefString, Context.MODE_PRIVATE)
-        return sharedPref.getInt(prefStringStartScreenIndex, 1)
+        return sharedPref.getInt(prefStringStartScreenIndex, 0)
     }
 }
